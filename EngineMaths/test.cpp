@@ -15,7 +15,16 @@ int main()
 	Math::Vector2 v3 = Math::Vector2::zero;
 
 	//v2 = v2.Normalize();
-	(v2+5.0f).Print();
+	
+	(v / v2).Print();
+
+	if (v != v2) 
+	{
+		std::cout << "EQUALLLLL" << '\n';
+	}else
+	{
+		std::cout << "NOT EQUALLLLL" << '\n';
+	}
 
 	//std::cout << v.CrossProduct(v2) << '\n';
 

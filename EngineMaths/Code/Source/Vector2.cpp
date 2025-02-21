@@ -11,40 +11,45 @@ namespace Math
 	Vector2 Vector2::xAxis = Vector2(1.0f, 0.0f);
 	Vector2 Vector2::yAxis = Vector2(0.0f, 1.0f);
 
-	Vector2::Vector2(float p_a, float p_b)
+	Vector2::Vector2(float a_a, float a_b)
 	{
-		x = p_a;
-		y = p_b;
+		x = a_a;
+		y = a_b;
 	}
 
-	Vector2 Vector2::Add(Vector2 p_v)
+	Vector2 Vector2::Add(Vector2 a_v)
 	{
-		return Vector2(x + p_v.x, y + p_v.y);
+		return Vector2(x + a_v.x, y + a_v.y);
 	}
 
-	Vector2 Vector2::Add(float p_a)
+	Vector2 Vector2::Add(float a_a)
 	{
-		return Vector2(x + p_a, y + p_a);
+		return Vector2(x + a_a, y + a_a);
 	}
 
-	Vector2 Vector2::Substract(Vector2 p_v)
+	Vector2 Vector2::Substract(Vector2 a_v)
 	{
-		return Vector2(x - p_v.x, y - p_v.y);
+		return Vector2(x - a_v.x, y - a_v.y);
 	}
 
-	Vector2 Vector2::Substract(float p_a)
+	Vector2 Vector2::Substract(float a_a)
 	{
-		return Vector2(x - p_a, y - p_a);
+		return Vector2(x - a_a, y - a_a);
 	}
 
-	Vector2 Vector2::Product(Vector2 p_v)
+	Vector2 Vector2::Product(Vector2 a_v)
 	{
-		return Vector2(x * p_v.x, y * p_v.y);
+		return Vector2(x * a_v.x, y * a_v.y);
 	}
 
-	Vector2 Vector2::Product(float p_a)
+	Vector2 Vector2::Product(float a_a)
 	{
-		return Vector2(x * p_a, y * p_a);;
+		return Vector2(x * a_a, y * a_a);;
+	}
+
+	Vector2 Vector2::Invert()
+	{
+		return Vector2(1 / x,1 / y);
 	}
 
 	float Vector2::Length()
@@ -57,14 +62,14 @@ namespace Math
 		return Vector2(x / Length(), y / Length());
 	}
 
-	float Vector2::DotProduct(Vector2 p_v)
+	float Vector2::DotProduct(Vector2 a_v)
 	{
-		return ((x * p_v.x) + (y * p_v.y));
+		return ((x * a_v.x) + (y * a_v.y));
 	}
 
-	float Vector2::CrossProduct(Vector2 p_v)
+	float Vector2::CrossProduct(Vector2 a_v)
 	{
-		return ((x * p_v.y) - (y * p_v.x));
+		return ((x * a_v.y) - (y * a_v.x));
 	}
 
 	void Vector2::Print()
@@ -72,14 +77,112 @@ namespace Math
 		std::cout << x << ", " << y << '\n';
 	}
 
-	Vector2 Vector2::operator+(const float p_a)
+	Vector2 Vector2::operator+(const float a_a)
 	{
-		return Add(p_a);
+		return Add(a_a);
 	}
 
-	Vector2 Vector2::operator+(const Vector2& p_v)
+	Vector2 Vector2::operator+(const Vector2& a_v)
 	{
-		return Add(p_v);
+		return Add(a_v);
+	}
+
+	Vector2 Vector2::operator-(const float a_a)
+	{
+		return Substract(a_a);
+	}
+
+	Vector2 Vector2::operator-(Vector2& a_v)
+	{
+		return Substract(a_v);
+	}
+
+	Vector2 Vector2::operator*(const float a_a)
+	{
+		return Product(a_a);
+	}
+
+	Vector2 Vector2::operator*(const Vector2& a_v)
+	{
+		return Product(a_v);
+	}
+
+	Vector2 Vector2::operator/(const float a_a)
+	{
+		return Product(1/a_a);
+	}
+
+	Vector2 Vector2::operator/(Vector2& a_v)
+	{
+		return Product(a_v.Invert());
+	}
+
+	void Vector2::operator+=(const float a_a)
+	{
+		x += a_a;
+		y += a_a;
+	}
+
+	void Vector2::operator+=(const Vector2& a_v)
+	{
+		x += a_v.x;
+		y += a_v.y;
+	}
+
+	void Vector2::operator*=(const float a_a)
+	{
+		x *= a_a;
+		y *= a_a;
+	}
+
+	void Vector2::operator*=(const Vector2& a_v)
+	{
+		x *= a_v.x;
+		y *= a_v.y;
+	}
+
+	void Vector2::operator-=(const float a_a)
+	{
+		x -= a_a;
+		y -= a_a;
+	}
+
+	void Vector2::operator-=(const Vector2& a_v)
+	{
+		x -= a_v.x;
+		y -= a_v.y;
+	}
+
+	void Vector2::operator/=(const float a_a)
+	{
+		x /= a_a;
+		y /= a_a;
+	}
+
+	void Vector2::operator/=(const Vector2& a_v)
+	{
+		x /= a_v.x;
+		y /= a_v.y;
+	}
+
+	bool Vector2::operator==(const float a_a)
+	{
+		return (x == a_a && y == a_a);
+	}
+
+	bool Vector2::operator==(const Vector2 a_v)
+	{
+		return (x == a_v.x && y == a_v.y);
+	}
+
+	bool Vector2::operator!=(const float a_a)
+	{
+		return !(x == a_a && y == a_a);
+	}
+
+	bool Vector2::operator!=(const Vector2 a_v)
+	{
+		return !(x == a_v.x && y == a_v.y);
 	}
 
 }
