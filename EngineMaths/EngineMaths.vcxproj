@@ -103,6 +103,7 @@
     <ClInclude Include="Code\Include\Quaternion.h" />
     <ClInclude Include="Code\Include\Utils.h" />
     <ClInclude Include="Code\Include\Vector3.h" />
+    <ClInclude Include="Code\Include\Vectors.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Code\Include\Vector2.h" />
   </ItemGroup>

@@ -67,11 +67,6 @@ namespace Math
 		return ((x * a_v.x) + (y * a_v.y));
 	}
 
-	float Vector2::CrossProduct(Vector2 a_v)
-	{
-		return ((x * a_v.y) - (y * a_v.x));
-	}
-
 	void Vector2::Print()
 	{
 		std::cout << x << ", " << y << '\n';

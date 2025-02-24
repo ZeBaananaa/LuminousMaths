@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Vector2.h"
+#include "Vectors.h"
 #include "Utils.h"
 
 TEST(TestCaseName, TestName) {
@@ -15,8 +15,15 @@ int main()
 	Math::Vector2 v3 = Math::Vector2::zero;
 
 	//v2 = v2.Normalize();
+
+	Math::Vector3 v3d = Math::Vector3(5.0f, 6.0f, 3.0f);
+	Math::Vector3 v3d2 = Math::Vector3(2.0f, 8.0f, 14.0f);
 	
-	(v / v2).Print();
+	std::cout << v3d.DotProduct(v3d2) << '\n';
+	(v3d.CrossProduct(v3d2)).Print();
+	(v3d - v3d2).Print();
+	(v3d * v3d2).Print();
+	(v3d / v3d2).Print();
 
 	if (v != v2) 
 	{

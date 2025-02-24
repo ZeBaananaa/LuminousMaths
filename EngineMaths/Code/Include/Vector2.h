@@ -23,7 +23,6 @@ namespace Math
 		float Length();
 		Vector2 Normalize();
 		float DotProduct(Vector2 a_v);
-		float CrossProduct(Vector2 a_v);
 		void Print();
 
 		static Vector2 zero;
