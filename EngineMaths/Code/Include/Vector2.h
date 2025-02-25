@@ -50,6 +50,7 @@ namespace Math
 		bool operator==(const Vector2 a_v);
 		bool operator!=(const float a_a);
 		bool operator!=(const Vector2 a_v);
+		float operator[](const int a_a);
 
 	};
 

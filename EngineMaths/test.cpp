@@ -22,17 +22,17 @@ int main()
 	Math::Vector3 v3d2 = Math::Vector3(2.0f, 8.0f, 14.0f);
 	Math::Vector3 v3d3 = Math::Vector3(2.0f, 8.0f, 14.0f);
 
-	Math::Vector3 a[3] = { v3d,v3d2,v3d3 };
-	Math::Matrix3 m3 = Math::Matrix3({ {1,1,1} ,{1,1,1} ,{1,1,1}});
-	m3.Print();
-	/*
-	std::cout << v3d.DotProduct(v3d2) << '\n';
-	(v3d.CrossProduct(v3d2)).Print();
-	(v3d - v3d2).Print();
-	(v3d * v3d2).Print();
-	(v3d / v3d2).Print();*/
 
-	if (v != v2) 
+	Math::Vector3 a[3] = { v3d,v3d2,v3d3 };
+	//Math::Matrix3 m3 = Math::Matrix3({ {1,1,1} ,{1,1,1} ,{1,1,1}});
+	Math::Matrix3 m3 = Math::Matrix3(v3d,v3d2 ,v3d3);
+	Math::Matrix3 m32 = Math::Matrix3({{1.0f,8.0f,3.0f},{4.0f,1.0f,24.0f},{7.0f,2.0f,12.0f}});
+	(m3+m32).Print();
+	(m3 - m32).Print();
+	(m3 * m32).Print();
+	(m3 / m32).Print();
+
+	if (m3 == m32) 
 	{
 		std::cout << "EQUALLLLL" << '\n';
 	}else

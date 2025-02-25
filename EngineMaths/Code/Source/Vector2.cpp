@@ -180,6 +180,20 @@ namespace Math
 		return !(x == a_v.x && y == a_v.y);
 	}
 
+	float Vector2::operator[](const int a_a)
+	{
+		switch (a_a)
+		{
+		case 0:
+			return x;
+		case 1:
+			return y;
+		default:
+			break;
+		}
+
+	}
+
 }
 
 
