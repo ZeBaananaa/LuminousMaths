@@ -2,6 +2,7 @@
 #include "Vectors.h"
 #include "Utils.h"
 #include "Matrix3.h"
+#include "Matrix4.h"
 
 
 TEST(TestCaseName, TestName) {
@@ -25,12 +26,19 @@ int main()
 
 	Math::Vector3 a[3] = { v3d,v3d2,v3d3 };
 	//Math::Matrix3 m3 = Math::Matrix3({ {1,1,1} ,{1,1,1} ,{1,1,1}});
-	Math::Matrix3 m3 = Math::Matrix3(v3d,v3d2 ,v3d3);
-	Math::Matrix3 m32 = Math::Matrix3({{1.0f,8.0f,3.0f},{4.0f,1.0f,24.0f},{7.0f,2.0f,12.0f}});
+	//Math::Matrix3 m3 = Math::Matrix3(v3d,v3d2 ,v3d3);
+	//Math::Matrix3 m32 = Math::Matrix3({{1.0f,8.0f,3.0f},{4.0f,1.0f,24.0f},{7.0f,2.0f,12.0f}});
+
+
+	Math::Matrix4 m3 = Math::Matrix4({ {5.0f,1.0f,8.0f,4.0f},{21.0f,3.0f,4.0f,8.0f},{1.5f,4.0f,32.0f,5.5f},{7.0f,3.2f,4.2f,11.0f} });
+	Math::Matrix4 m32 = Math::Matrix4({ {1.0f,8.0f,3.0f,5.0f},{4.0f,1.0f,24.0f,7.0f},{7.0f,2.0f,12.0f,41.0f},{4.0f,5.0f,23.0f,9.0f} });
+
 	(m3+m32).Print();
 	(m3 - m32).Print();
 	(m3 * m32).Print();
 	(m3 / m32).Print();
+	(m3.Transpose()).Print();
+	//(m3.Inverse()).Print();
 
 	if (m3 == m32) 
 	{
