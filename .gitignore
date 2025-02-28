@@ -38,3 +38,4 @@
 /cmake**
 /Tests/Libs/glm/
 /Tests/Libs/googletest/
+/Builds/**
