@@ -103,14 +103,14 @@ namespace Math
 		return t_m;
 	}
 
-	Matrix3 Math::Matrix3::Product(Matrix3 a_m)
-	{
+	Matrix3 Math::Matrix3::Product(Matrix3 a_m) {
 		Matrix3 t_m;
-		for (int i = 0; i < 3; ++i)
-		{
-			for (int j = 0; j < 3; ++j)
-			{
-				t_m.mat[i][j] = mat[i][0] * a_m.mat[0][j] + a_m.mat[i][1] *  a_m.mat[1][j] + a_m.mat[i][2] * a_m.mat[2][j];
+		for (int i = 0; i < 3; ++i) {
+			for (int j = 0; j < 3; ++j) {
+				t_m.mat[i][j] = 0;
+				for (int k = 0; k < 3; ++k) {
+					t_m.mat[i][j] += mat[i][k] * a_m.mat[k][j];
+				}
 			}
 		}
 		return t_m;
