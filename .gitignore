@@ -32,6 +32,9 @@
 *.app
 .vs
 .idea
-cmake-build-debug-mingw
+
+# Others
+
+/cmake**
 /Tests/Libs/glm/
 /Tests/Libs/googletest/
