@@ -33,3 +33,5 @@
 .vs
 .idea
 cmake-build-debug-mingw
+/Tests/Libs/glm/
+/Tests/Libs/googletest/
