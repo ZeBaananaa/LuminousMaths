@@ -23,19 +23,19 @@ namespace Maths
 		[[nodiscard]] inline Matrix3 Product(const Matrix3& a_m) const;
 		[[nodiscard]] inline Matrix3 Divide(const float& a_a) const;
 		[[nodiscard]] inline Matrix3 Divide(const Matrix3& a_m) const;
-		[[nodiscard]] inline Matrix3 Opposite() const;
-		[[nodiscard]] inline Matrix3 Transpose() const;
+		[[nodiscard]] Matrix3 Opposite() const;
+		[[nodiscard]] Matrix3 Transpose() const;
 
-		[[nodiscard]] inline float Trace() const;
+		[[nodiscard]] float Trace() const;
 
-		inline Matrix3 operator+(const float& a_a) const;
-		inline Matrix3 operator+(const Matrix3& a_m) const;
-		inline Matrix3 operator-(const float& a_a) const;
-		inline Matrix3 operator-(const Matrix3& a_m) const;
-		inline Matrix3 operator*(const float& a_a) const;
-		inline Matrix3 operator*(const Matrix3& a_m) const;
-		inline Matrix3 operator/(const float& a_a) const;
-		inline Matrix3 operator/(const Matrix3& a_m) const;
+		Matrix3 operator+(const float& a_a) const;
+		Matrix3 operator+(const Matrix3& a_m) const;
+		Matrix3 operator-(const float& a_a) const;
+		Matrix3 operator-(const Matrix3& a_m) const;
+		Matrix3 operator*(const float& a_a) const;
+		Matrix3 operator*(const Matrix3& a_m) const;
+		Matrix3 operator/(const float& a_a) const;
+		Matrix3 operator/(const Matrix3& a_m) const;
 
 		inline void operator+=(const float& a_a);
 		inline void operator+=(const Matrix3& a_m);
