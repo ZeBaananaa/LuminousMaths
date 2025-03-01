@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include "Matrix3.h"
 #include "Matrix4.h"
+#include <iostream>
 
 
 TEST(TestCaseName, TestName) {
@@ -30,16 +31,23 @@ int main()
 	//Math::Matrix3 m32 = Math::Matrix3({{1.0f,8.0f,3.0f},{4.0f,1.0f,24.0f},{7.0f,2.0f,12.0f}});
 
 
-	Math::Matrix4 m3 = Math::Matrix4({ {5.0f,1.0f,8.0f,4.0f},{21.0f,3.0f,4.0f,8.0f},{1.5f,4.0f,32.0f,5.5f},{7.0f,3.2f,4.2f,11.0f} });
+	Math::Matrix4 m3 = Math::Matrix4({ {1.0f,1.0f,8.0f,4.0f},{21.0f,1.0f,4.0f,8.0f},{1.5f,4.0f,1.0f,5.5f},{7.0f,3.2f,4.2f,1.0f} });
 	Math::Matrix4 m32 = Math::Matrix4({ {1.0f,8.0f,3.0f,5.0f},{4.0f,1.0f,24.0f,7.0f},{7.0f,2.0f,12.0f,41.0f},{4.0f,5.0f,23.0f,9.0f} });
-
+	
+	Math::Matrix4 TRS = Math::Matrix4::TRS(Math::Vector3(5, 2, 6), Math::Vector3(1, 31, 90), Math::Vector3(2, 2, 2));
+	
+	TRS.Print();
+	/*
 	(m3+m32).Print();
 	(m3 - m32).Print();
 	(m3 * m32).Print();
 	(m3 / m32).Print();
+
 	(m3.Transpose()).Print();
 	//(m3.Inverse()).Print();
-
+	Math::Matrix4 m = Math::Matrix4::identity;
+	std::cout << m.IsOrthogonal() << '\n';
+	
 	if (m3 == m32) 
 	{
 		std::cout << "EQUALLLLL" << '\n';
@@ -48,7 +56,7 @@ int main()
 		std::cout << "NOT EQUALLLLL" << '\n';
 	}
 
-	//std::cout << v.CrossProduct(v2) << '\n';
+	//std::cout << v.CrossProduct(v2) << '\n';*/
 
 	return 0;
 }
