@@ -29,12 +29,12 @@ namespace Maths
 		return Vector3(x + a_a, y + a_a, z + a_a);
 	}
 
-	Vector3 Vector3::Substract(const Vector3& a_v) const
+	Vector3 Vector3::Subtract(const Vector3& a_v) const
 	{
 		return Vector3(x - a_v.x, y - a_v.y, z - a_v.z);
 	}
 
-	Vector3 Vector3::Substract(const float& a_a) const
+	Vector3 Vector3::Subtract(const float& a_a) const
 	{
 		return Vector3(x - a_a, y - a_a, z - a_a);
 	}
@@ -91,12 +91,12 @@ namespace Maths
 
 	Vector3 Vector3::operator-(const float& a_a) const
 	{
-		return Substract(a_a);
+		return Subtract(a_a);
 	}
 
 	Vector3 Vector3::operator-(const Vector3& a_v) const
 	{
-		return Substract(a_v);
+		return Subtract(a_v);
 	}
 
 	Vector3 Vector3::operator*(const float& a_a) const

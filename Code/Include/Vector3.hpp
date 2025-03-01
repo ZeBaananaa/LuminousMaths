@@ -12,8 +12,8 @@ namespace Maths
 
 		[[nodiscard]] inline Vector3 Add(const Vector3& a_v) const;
 		[[nodiscard]] inline Vector3 Add(const float& a_a) const;
-		[[nodiscard]] inline Vector3 Substract(const Vector3& a_v) const;
-		[[nodiscard]] inline Vector3 Substract(const float& a_a) const;
+		[[nodiscard]] inline Vector3 Subtract(const Vector3& a_v) const;
+		[[nodiscard]] inline Vector3 Subtract(const float& a_a) const;
 		[[nodiscard]] inline Vector3 Product(const Vector3& a_v) const;
 		[[nodiscard]] inline Vector3 Product(const float& a_a) const;
 		[[nodiscard]] inline Vector3 Invert() const;

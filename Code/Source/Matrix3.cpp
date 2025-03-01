@@ -4,40 +4,28 @@
 
 #include <iostream>
 
+#include "Utils.hpp"
+
 namespace Maths
 {
 	Matrix3::Matrix3(const float& a_a)
 	{
-		for (int i = 0; i < 3; ++i)
-		{
-			for (int j = 0; j < 3; ++j)
-			{
-				mat[i][j] = a_a;
-			}
-		}
+		for (std::array<float, 3>& i : mat)
+			i.fill(a_a);
 	}
 
-	Matrix3::Matrix3(const float (&a_mat)[3][3])
+	Matrix3::Matrix3(const std::array<std::array<float, 3>, 3>& a_mat)
 	{
-		for (int i = 0; i < 3; ++i)
-		{
-			for (int j = 0; j < 3; ++j)
-			{
-				mat[i][j] = a_mat[i][j];
-			}
-		}
+		mat = a_mat;
 	}
 
 	Matrix3::Matrix3(const Vector3& a_v1, const Vector3& a_v2, const Vector3& a_v3)
 	{
-		Vector3 t_v[3] = {a_v1, a_v2, a_v3};
-		for (int i = 0; i < 3; ++i)
-		{
-			for (int j = 0; j < 3; ++j)
-			{
-				mat[i][j] = t_v[i][j];
-			}
-		}
+		mat = {
+			a_v1.x, a_v1.y, a_v1.z, // Utilisation des membres directement
+			a_v2.x, a_v2.y, a_v2.z,
+			a_v3.x, a_v3.y, a_v3.z
+		};
 	}
 
 	Matrix3 Matrix3::Add(const float& a_a) const
@@ -66,7 +54,7 @@ namespace Maths
 		return t_m;
 	}
 
-	Matrix3 Matrix3::Substract(const float& a_a) const
+	Matrix3 Matrix3::Subtract(const float& a_a) const
 	{
 		Matrix3 t_m{};
 		for (int i = 0; i < 3; ++i)
@@ -79,7 +67,7 @@ namespace Maths
 		return t_m;
 	}
 
-	Matrix3 Matrix3::Substract(const Matrix3& a_m) const
+	Matrix3 Matrix3::Subtract(const Matrix3& a_m) const
 	{
 		Matrix3 t_m{};
 		for (int i = 0; i < 3; ++i)
@@ -121,6 +109,9 @@ namespace Maths
 
 	Matrix3 Matrix3::Divide(const float& a_a) const
 	{
+		if (a_a <= PRECISION)
+			throw std::invalid_argument("Error: Trying to divide by zero!");
+
 		Matrix3 t_m{};
 		for (int i = 0; i < 3; ++i)
 		{
@@ -147,13 +138,13 @@ namespace Maths
 
 	Matrix3 Matrix3::Opposite() const
 	{
-		const Matrix3 t_m = Matrix3(mat);
+		const Matrix3 t_m{*this};
 		return t_m * -1;
 	}
 
 	Matrix3 Matrix3::Transpose() const
 	{
-		Matrix3 t_m = Matrix3();
+		Matrix3 t_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
@@ -181,12 +172,12 @@ namespace Maths
 
 	Matrix3 Matrix3::operator-(const float& a_a) const
 	{
-		return Substract(a_a);
+		return Subtract(a_a);
 	}
 
 	Matrix3 Matrix3::operator-(const Matrix3& a_m) const
 	{
-		return Substract(a_m);
+		return Subtract(a_m);
 	}
 
 	Matrix3 Matrix3::operator*(const float& a_a) const
@@ -251,68 +242,39 @@ namespace Maths
 
 	bool Matrix3::operator==(const float& a_a) const
 	{
-		bool t_condition = true;
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
 				if (mat[i][j] != a_a)
-					t_condition = false;
+					return false;
 			}
-			if (!t_condition)
-				break;
 		}
-		return t_condition;
+		return true;
 	}
 
 	bool Matrix3::operator==(const Matrix3& a_m) const
 	{
-		bool t_condition = true;
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
 				if (mat[i][j] != a_m.mat[i][j])
-					t_condition = false;
+					return false;
 			}
-			if (!t_condition)
-				break;
 		}
-		return t_condition;
+		return true;
 	}
 
 	bool Matrix3::operator!=(const float& a_a) const
 	{
-		bool t_condition = true;
-		for (int i = 0; i < 3; ++i)
-		{
-			for (int j = 0; j < 3; ++j)
-			{
-				if (mat[i][j] == a_a)
-					t_condition = false;
-			}
-			if (!t_condition)
-				break;
-		}
-		return t_condition;
+		return !(*this == a_a);
 	}
 
 	bool Matrix3::operator!=(const Matrix3& a_m) const
 	{
-		bool t_condition = true;
-		for (int i = 0; i < 3; ++i)
-		{
-			for (int j = 0; j < 3; ++j)
-			{
-				if (mat[i][j] == a_m.mat[i][j])
-					t_condition = false;
-			}
-			if (!t_condition)
-				break;
-		}
-		return t_condition;
+		return !(*this == a_m);
 	}
-
 
 	void Matrix3::Print() const
 	{

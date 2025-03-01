@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <array>
 
 namespace Maths
 {
@@ -7,17 +8,17 @@ namespace Maths
 	class Matrix3
 	{
 	public:
-		float mat[3][3];
+		std::array<std::array<float, 3>, 3> mat{};
 
 		explicit Matrix3() = default;
 		explicit Matrix3(const float& a_a);
-		explicit Matrix3(const float (&a_mat)[3][3]);
+		explicit Matrix3(const std::array<std::array<float, 3>, 3>& a_mat);
 		explicit Matrix3(const Vector3& a_v1, const Vector3& a_v2, const Vector3& a_v3);
 
 		[[nodiscard]] inline Matrix3 Add(const float& a_a) const;
 		[[nodiscard]] inline Matrix3 Add(const Matrix3& a_m) const;
-		[[nodiscard]] inline Matrix3 Substract(const float& a_a) const;
-		[[nodiscard]] inline Matrix3 Substract(const Matrix3& a_m) const;
+		[[nodiscard]] inline Matrix3 Subtract(const float& a_a) const;
+		[[nodiscard]] inline Matrix3 Subtract(const Matrix3& a_m) const;
 		[[nodiscard]] inline Matrix3 Product(const float& a_a) const;
 		[[nodiscard]] inline Matrix3 Product(const Matrix3& a_m) const;
 		[[nodiscard]] inline Matrix3 Divide(const float& a_a) const;

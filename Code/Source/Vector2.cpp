@@ -27,12 +27,12 @@ namespace Maths
 		return Vector2(x + a_a, y + a_a);
 	}
 
-	Vector2 Vector2::Substract(const Vector2& a_v) const
+	Vector2 Vector2::Subtract(const Vector2& a_v) const
 	{
 		return Vector2(x - a_v.x, y - a_v.y);
 	}
 
-	Vector2 Vector2::Substract(const float& a_a) const
+	Vector2 Vector2::Subtract(const float& a_a) const
 	{
 		return Vector2(x - a_a, y - a_a);
 	}
@@ -84,12 +84,12 @@ namespace Maths
 
 	Vector2 Vector2::operator-(const float& a_a) const
 	{
-		return Substract(a_a);
+		return Subtract(a_a);
 	}
 
 	Vector2 Vector2::operator-(const Vector2& a_v) const
 	{
-		return Substract(a_v);
+		return Subtract(a_v);
 	}
 
 	Vector2 Vector2::operator*(const float& a_a) const
