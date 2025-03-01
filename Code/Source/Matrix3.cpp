@@ -10,8 +10,11 @@ namespace Maths
 {
 	Matrix3::Matrix3(const float& a_a)
 	{
-		for (std::array<float, 3>& i : mat)
-			i.fill(a_a);
+		mat = {
+			a_a, 0.f, 0.f,
+			0.f, a_a, 0.f,
+			0.f, 0.f, a_a
+		};
 	}
 
 	Matrix3::Matrix3(const std::array<std::array<float, 3>, 3>& a_mat)
@@ -22,7 +25,7 @@ namespace Maths
 	Matrix3::Matrix3(const Vector3& a_v1, const Vector3& a_v2, const Vector3& a_v3)
 	{
 		mat = {
-			a_v1.x, a_v1.y, a_v1.z, // Utilisation des membres directement
+			a_v1.x, a_v1.y, a_v1.z,
 			a_v2.x, a_v2.y, a_v2.z,
 			a_v3.x, a_v3.y, a_v3.z
 		};
