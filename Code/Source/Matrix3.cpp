@@ -2,9 +2,10 @@
 
 #include "Vector3.hpp"
 
+#include "Utils.hpp"
+
 #include <iostream>
 
-#include "Utils.hpp"
 
 namespace Maths
 {
@@ -103,8 +104,7 @@ namespace Maths
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[i][0] * a_m.mat[0][j] + a_m.mat[i][1] * a_m.mat[1][j] + a_m.mat[i][2] * a_m.mat[2][
-					j];
+				t_m.mat[i][j] = mat[i][0] * a_m.mat[0][j] + mat[i][1] * a_m.mat[1][j] + mat[i][2] * a_m.mat[2][j];
 			}
 		}
 		return t_m;

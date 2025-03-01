@@ -3,32 +3,23 @@
 #include "Matrix3.hpp"
 #include "Vector3.hpp"
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include "glm/gtx/string_cast.hpp"
+
 #include "gtest/gtest.h"
-
-
-
-
-
-
 
 namespace Maths
 {
-    bool MatricesAreEqual(const Matrix3& mat1, const glm::mat3& mat2, float tolerance = 1e-6f)
+    bool MatricesAreEqual(Matrix3& mat1, glm::mat3& mat2, float tolerance = 1e-6f)
     {
         for (int i = 0; i < 3; ++i)
-        {
             for (int j = 0; j < 3; ++j)
-            {
                 if (std::abs(mat1.mat[i][j] - mat2[i][j]) > tolerance)
-                {
                     return false;
-                }
-            }
-        }
         return true;
     }
 
-    float trace(const glm::mat3& mat)
+    float trace(glm::mat3& mat)
     {
         return mat[0][0] + mat[1][1] + mat[2][2];
     }
@@ -70,19 +61,19 @@ namespace Maths
 
     TEST(Matrix3Test, AddScalar)
     {
-        const float scalar = 1.0f;
-        const Matrix3 mat3(1.0f);
-        const Matrix3 result = mat3 + scalar;
-        glm::mat3 glmMat3 = glm::mat3(2.0f);
+        float scalar = 1.0f;
+        Matrix3 mat3(1.0f);
+        Matrix3 result = mat3 + scalar;
+        glm::mat3 glmMat3 = glm::mat3(1.0f) + scalar;
 
         EXPECT_TRUE(MatricesAreEqual(result, glmMat3));
     }
 
     TEST(Matrix3Test, AddMatrix)
     {
-        const Matrix3 mat1(1.0f);
-        const Matrix3 mat2(2.0f);
-        const Matrix3 result = mat1 + mat2;
+        Matrix3 mat1(1.0f);
+        Matrix3 mat2(2.0f);
+        Matrix3 result = mat1 + mat2;
         glm::mat3 glmMat3 = glm::mat3(3.0f);
 
         EXPECT_TRUE(MatricesAreEqual(result, glmMat3));
@@ -90,19 +81,19 @@ namespace Maths
 
     TEST(Matrix3Test, SubtractScalar)
     {
-        const float scalar = 1.0f;
-        const Matrix3 mat3(3.0f);
-        const Matrix3 result = mat3 - scalar;
-        glm::mat3 glmMat3 = glm::mat3(2.0f);
+        float scalar = 1.0f;
+        Matrix3 mat3(3.0f);
+        Matrix3 result = mat3 - scalar;
+        glm::mat3 glmMat3 = glm::mat3(3.0f) - scalar;
 
         EXPECT_TRUE(MatricesAreEqual(result, glmMat3));
     }
 
     TEST(Matrix3Test, SubtractMatrix)
     {
-        const Matrix3 mat1(3.0f);
-        const Matrix3 mat2(1.0f);
-        const Matrix3 result = mat1 - mat2;
+        Matrix3 mat1(3.0f);
+        Matrix3 mat2(1.0f);
+        Matrix3 result = mat1 - mat2;
         glm::mat3 glmMat3 = glm::mat3(2.0f);
 
         EXPECT_TRUE(MatricesAreEqual(result, glmMat3));
@@ -110,9 +101,9 @@ namespace Maths
 
     TEST(Matrix3Test, MultiplyScalar)
     {
-        const float scalar = 2.0f;
-        const Matrix3 mat3(1.0f);
-        const Matrix3 result = mat3 * scalar;
+        float scalar = 2.0f;
+        Matrix3 mat3(1.0f);
+        Matrix3 result = mat3 * scalar;
         glm::mat3 glmMat3 = glm::mat3(2.0f);
 
         EXPECT_TRUE(MatricesAreEqual(result, glmMat3));
@@ -120,19 +111,27 @@ namespace Maths
 
     TEST(Matrix3Test, MultiplyMatrix)
     {
-        const Matrix3 mat1(1.0f);
-        const Matrix3 mat2(2.0f);
-        const Matrix3 result = mat1 * mat2;
-        glm::mat3 glmMat3 = glm::mat3(6.0f);
+        Matrix3 mat1(1.0f);
+        Matrix3 mat2(2.0f);
+        Matrix3 result = mat1 * mat2;
 
-        EXPECT_TRUE(MatricesAreEqual(result, glmMat3));
+        glm::mat3 glmMat1 = glm::mat3(1.0f);
+        glm::mat3 glmMat2 = glm::mat3(2.0f);
+        glm::mat3 glmResult = glmMat1 * glmMat2;
+
+        std::cout << "LMaths : ";
+        result.Print();
+        std::cout << "\n";
+        std::cout << "GLM : " << to_string(glmResult) << "\n";
+
+        EXPECT_TRUE(MatricesAreEqual(result, glmResult));
     }
 
     TEST(Matrix3Test, DivideScalar)
     {
-        const float scalar = 2.0f;
-        const Matrix3 mat3(4.0f);
-        const Matrix3 result = mat3 / scalar;
+        float scalar = 2.0f;
+        Matrix3 mat3(4.0f);
+        Matrix3 result = mat3 / scalar;
         glm::mat3 glmMat3 = glm::mat3(2.0f);
 
         EXPECT_TRUE(MatricesAreEqual(result, glmMat3));
@@ -140,40 +139,34 @@ namespace Maths
 
     TEST(Matrix3Test, Opposite)
     {
-        const Matrix3 mat3(1.0f);
-        const Matrix3 result = mat3.Opposite();
-        const glm::mat3 glmMat3 = glm::mat3(-1.0f);
+        Matrix3 mat3(1.0f);
+        Matrix3 result = mat3.Opposite();
+        glm::mat3 glmMat3 = glm::mat3(-1.0f);
 
         EXPECT_TRUE(MatricesAreEqual(result, glmMat3));
     }
 
     TEST(Matrix3Test, Transpose)
     {
-       const Matrix3 mat3(Vector3(1.0f, 2.0f, 3.0f), Vector3(4.0f, 5.0f, 6.0f), Vector3(7.0f, 8.0f, 9.0f));
-        const Matrix3 result = mat3.Transpose();
-        const glm::mat3 glmMat3 = glm::transpose(glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f));
+        Matrix3 mat3(Vector3(1.0f, 2.0f, 3.0f), Vector3(4.0f, 5.0f, 6.0f), Vector3(7.0f, 8.0f, 9.0f));
+        Matrix3 result = mat3.Transpose();
+        glm::mat3 glmMat3 = transpose(glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f));
 
         EXPECT_TRUE(MatricesAreEqual(result, glmMat3));
     }
 
-    // Test de la trace de la matrice
     TEST(Matrix3Test, Trace)
     {
-        const Matrix3 mat3(Vector3(1.0f, 2.0f, 3.0f), Vector3(4.0f, 5.0f, 6.0f), Vector3(7.0f, 8.0f, 9.0f));
+        Matrix3 mat3(Vector3(1.0f, 2.0f, 3.0f), Vector3(4.0f, 5.0f, 6.0f), Vector3(7.0f, 8.0f, 9.0f));
         float result = mat3.Trace();
-        const float glmResult = trace(glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f));
+
+        glm::mat3 glmMat = glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
+
+        float glmResult = trace(glmMat);
 
         EXPECT_FLOAT_EQ(result, glmResult);
     }
 }
-
-
-
-
-
-
-
-
 
 
 int main(int argc, char** argv)

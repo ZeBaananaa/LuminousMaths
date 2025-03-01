@@ -51,7 +51,7 @@ namespace Maths
 		inline bool operator!=(const float& a_a) const;
 		inline bool operator!=(const Matrix3& a_m) const;
 
-		inline void Print() const;
+		void Print() const;
 	};
 }
 
