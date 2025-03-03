@@ -39,3 +39,4 @@
 /Tests/Libs/googletest/
 /Builds/**
 /out
+cmake-build-debug
