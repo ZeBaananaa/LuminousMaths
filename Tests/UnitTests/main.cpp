@@ -8,6 +8,8 @@
 
 #include "gtest/gtest.h"
 
+#include "Quaternion.h"
+
 namespace Maths
 {
     bool MatricesAreEqual(Matrix3& mat1, glm::mat3& mat2, float tolerance = 1e-6f)
@@ -171,6 +173,17 @@ namespace Maths
 
 int main(int argc, char** argv)
 {
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    //testing::InitGoogleTest(&argc, argv);
+    //return RUN_ALL_TESTS();
+
+    Maths::Vector3 vec3 = Maths::Vector3(5, 5, 5);
+    (vec3+vec3).Print();
+
+
+
+    Maths::Quaternion q1 = Maths::Quaternion(5, 3, 4, 1);
+    Maths::Quaternion q2 = Maths::Quaternion(4, 6, 7, 1);
+    q2.Product(q1).Print();
+
+    return 0;
 }

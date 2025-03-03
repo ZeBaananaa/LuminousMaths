@@ -22,7 +22,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${LM_OUTPUT_DIR}")
 file(GLOB_RECURSE LM_SOURCES "Code/Source/*.cpp")
 
 # Add sources to the library
-add_library(L_MATHS STATIC ${LM_SOURCES})
+add_library(L_MATHS STATIC ${LM_SOURCES} "Code/Include/Quaternion.h" "Code/Source/Quaternion.cpp")
 
 # Add Include Directory to the library
 target_include_directories(L_MATHS PUBLIC "Code/Include")
