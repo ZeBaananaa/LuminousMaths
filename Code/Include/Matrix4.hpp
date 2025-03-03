@@ -1,10 +1,12 @@
 ﻿#pragma once
+
+#include "MathsExport.hpp"
+
 #include "Vector3.hpp"
 
 namespace Maths
 {
-
-	class Matrix4
+	class LUMINOUS_MATHS_API Matrix4
 	{
 	public:
 

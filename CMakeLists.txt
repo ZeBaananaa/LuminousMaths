@@ -18,23 +18,46 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${LM_OUTPUT_DIR}/libs")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${LM_OUTPUT_DIR}/libs")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${LM_OUTPUT_DIR}")
 
+# To build shared libraries in Windows, we set CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS to TRUE.
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
+# Build position independent code.
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
+# Disable C and C++ compiler extensions.
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 # Store the sources into a variable `LM_SOURCES`
 file(GLOB_RECURSE LM_SOURCES "Code/Source/*.cpp")
 
+# Define the lib name for easy modification
+set(LM_LIB_NAME L_MATHS)
+
 # Add sources to the library
-add_library(L_MATHS STATIC ${LM_SOURCES})
+add_library(${LM_LIB_NAME} SHARED ${LM_SOURCES})
 
 # Add Include Directory to the library
-target_include_directories(L_MATHS PUBLIC "Code/Include")
+target_include_directories(${LM_LIB_NAME} PUBLIC "Code/Include")
+
+# Define the math export
+target_compile_definitions(${LM_LIB_NAME} PRIVATE LUMINOUS_MATHS_EXPORTS)
 
 # Define C++ Standard Version
-target_compile_features(L_MATHS PRIVATE cxx_std_20)
+target_compile_features(${LM_LIB_NAME} PRIVATE cxx_std_20)
+
+# Disable lib prefix
+set_target_properties(${LM_LIB_NAME} PROPERTIES PREFIX "")
+
+# Set dll name
+set_target_properties(${LM_LIB_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}-${PROJECT_VERSION}")
 
 # Set Warning level 4 and warnings as errors flags
 if (MSVC)
-    target_compile_options(L_MATHS PRIVATE /W4 /WX)
+    set(CMAKE_DEBUG_POSTFIX "d")
+    target_compile_options(${LM_LIB_NAME} PRIVATE /W4 /WX)
 else ()
-    target_compile_options(L_MATHS PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    target_compile_options(${LM_LIB_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif ()
 
 
@@ -43,7 +66,7 @@ endif ()
 #             CREATE OPTIONS              #
 # --------------------------------------- #
 
-option(L_MATHS_UNITTEST "Enable Unit Tests" ON)
+option(${LM_LIB_NAME}_UNITTEST "Enable Unit Tests" OFF)
 
 
 
@@ -55,6 +78,6 @@ option(L_MATHS_UNITTEST "Enable Unit Tests" ON)
 enable_testing()
 
 # Enable GoogleTest & GLM
-if (L_MATHS_UNITTEST)
+if (${LM_LIB_NAME}_UNITTEST)
     add_subdirectory(Tests)
 endif()

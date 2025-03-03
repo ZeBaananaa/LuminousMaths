@@ -1,11 +1,14 @@
 ﻿#pragma once
+
+#include "MathsExport.hpp"
+
 #include <array>
 
 namespace Maths
 {
 	class Vector3;
 
-	class Matrix3
+	class LUMINOUS_MATHS_API Matrix3
 	{
 	public:
 		std::array<std::array<float, 3>, 3> mat{};
