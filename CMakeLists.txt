@@ -3,7 +3,7 @@
 # --------------------------------------- #
 
 # Define minimum CMake version required
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.20)
 
 # Define Project Name
 project(LuminousMaths
