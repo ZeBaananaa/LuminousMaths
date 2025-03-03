@@ -6,7 +6,6 @@
 
 #include <iostream>
 
-
 namespace Maths
 {
 	Matrix3::Matrix3(const float& a_a)
@@ -34,128 +33,128 @@ namespace Maths
 
 	Matrix3 Matrix3::Add(const float& a_a) const
 	{
-		Matrix3 t_m{};
+		Matrix3 l_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[i][j] + a_a;
+				l_m.mat[i][j] = mat[i][j] + a_a;
 			}
 		}
-		return t_m;
+		return l_m;
 	}
 
 	Matrix3 Matrix3::Add(const Matrix3& a_m) const
 	{
-		Matrix3 t_m{};
+		Matrix3 l_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[i][j] + a_m.mat[i][j];
+				l_m.mat[i][j] = mat[i][j] + a_m.mat[i][j];
 			}
 		}
-		return t_m;
+		return l_m;
 	}
 
 	Matrix3 Matrix3::Subtract(const float& a_a) const
 	{
-		Matrix3 t_m{};
+		Matrix3 l_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[i][j] - a_a;
+				l_m.mat[i][j] = mat[i][j] - a_a;
 			}
 		}
-		return t_m;
+		return l_m;
 	}
 
 	Matrix3 Matrix3::Subtract(const Matrix3& a_m) const
 	{
-		Matrix3 t_m{};
+		Matrix3 l_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[i][j] - a_m.mat[i][j];
+				l_m.mat[i][j] = mat[i][j] - a_m.mat[i][j];
 			}
 		}
-		return t_m;
+		return l_m;
 	}
 
 	Matrix3 Matrix3::Product(const float& a_a) const
 	{
-		Matrix3 t_m{};
+		Matrix3 l_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[i][j] * a_a;
+				l_m.mat[i][j] = mat[i][j] * a_a;
 			}
 		}
-		return t_m;
+		return l_m;
 	}
 
 	Matrix3 Matrix3::Product(const Matrix3& a_m) const
 	{
-		Matrix3 t_m{};
+		Matrix3 l_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[i][0] * a_m.mat[0][j] + mat[i][1] * a_m.mat[1][j] + mat[i][2] * a_m.mat[2][j];
+				l_m.mat[i][j] = mat[i][0] * a_m.mat[0][j] + mat[i][1] * a_m.mat[1][j] + mat[i][2] * a_m.mat[2][j];
 			}
 		}
-		return t_m;
+		return l_m;
 	}
 
 	Matrix3 Matrix3::Divide(const float& a_a) const
 	{
-		if (a_a <= PRECISION)
+		if (a_a <= Maths::PRECISION)
 			throw std::invalid_argument("Error: Trying to divide by zero!");
 
-		Matrix3 t_m{};
+		Matrix3 l_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[i][j] / a_a;
+				l_m.mat[i][j] = mat[i][j] / a_a;
 			}
 		}
-		return t_m;
+		return l_m;
 	}
 
 	Matrix3 Matrix3::Divide(const Matrix3& a_m) const
 	{
-		Matrix3 t_m{};
+		Matrix3 l_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[i][j] / a_m.mat[i][j];
+				l_m.mat[i][j] = mat[i][j] / a_m.mat[i][j];
 			}
 		}
-		return t_m;
+		return l_m;
 	}
 
 	Matrix3 Matrix3::Opposite() const
 	{
-		const Matrix3 t_m{*this};
-		return t_m * -1;
+		const Matrix3 l_m{*this};
+		return l_m * -1;
 	}
 
 	Matrix3 Matrix3::Transpose() const
 	{
-		Matrix3 t_m{};
+		Matrix3 l_m{};
 		for (int i = 0; i < 3; ++i)
 		{
 			for (int j = 0; j < 3; ++j)
 			{
-				t_m.mat[i][j] = mat[j][i];
+				l_m.mat[i][j] = mat[j][i];
 			}
 		}
-		return t_m;
+		return l_m;
 	}
 
 	float Matrix3::Trace() const

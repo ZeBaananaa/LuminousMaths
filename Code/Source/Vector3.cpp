@@ -1,8 +1,8 @@
 ﻿#include "Vector3.hpp"
 
-#include "Utils.hpp"
-
 #include <iostream>
+
+#include "Utils.hpp"
 
 namespace Maths
 {
@@ -56,7 +56,7 @@ namespace Maths
 
 	float Vector3::Length() const
 	{
-		return Sqrt((x * x) + (y * y) + (z * z));
+		return Maths::Sqrt((x * x) + (y * y) + (z * z));
 	}
 
 	Vector3 Vector3::Normalize() const
@@ -199,14 +199,14 @@ namespace Maths
 	{
 		switch (a_a)
 		{
-		case 0:
-			return x;
-		case 1:
-			return y;
-		case 2:
-			return z;
-		default:
-			return 0.f;
+			case 0:
+				return x;
+			case 1:
+				return y;
+			case 2:
+				return z;
+			default:
+				return 0.f;
 		}
 	}
 }

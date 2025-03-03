@@ -1,8 +1,8 @@
 ﻿#include "Vector2.hpp"
 
-#include "Utils.hpp"
-
 #include <iostream>
+
+#include "Utils.hpp"
 
 namespace Maths
 {
@@ -54,7 +54,7 @@ namespace Maths
 
 	float Vector2::Length() const
 	{
-		return Sqrt((x * x) + (y * y));
+		return Maths::Sqrt((x * x) + (y * y));
 	}
 
 	Vector2 Vector2::Normalize() const
@@ -184,12 +184,12 @@ namespace Maths
 	{
 		switch (a_a)
 		{
-		case 0:
-			return x;
-		case 1:
-			return y;
-		default:
-			return 0.f;
+			case 0:
+				return x;
+			case 1:
+				return y;
+			default:
+				return 0.f;
 		}
 	}
 }
