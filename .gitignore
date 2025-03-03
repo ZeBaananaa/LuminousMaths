@@ -35,7 +35,7 @@
 
 # Others
 
-/cmake**
 /Tests/Libs/glm/
 /Tests/Libs/googletest/
 /Builds/**
+/out
