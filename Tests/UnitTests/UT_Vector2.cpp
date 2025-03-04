@@ -231,11 +231,9 @@ namespace Maths
     {
         Vector2 vec1(4.0f, 4.0f);
         float result = vec1.Length();
-        std::cout << result << std::endl;
 
         glm::vec2 vec2 = glm::vec2(4.0f, 4.0f);
         float gResult = length(vec2);
-        std::cout << gResult << std::endl;
 
         EXPECT_FLOAT_EQ(result, gResult);
     }
