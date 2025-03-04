@@ -8,7 +8,7 @@
 
 #include "gtest/gtest.h"
 
-#include "Quaternion.h"
+#include "Quaternion.hpp"
 
 namespace Maths
 {
@@ -181,9 +181,11 @@ int main(int argc, char** argv)
 
 
 
-    Maths::Quaternion q1 = Maths::Quaternion(5, 3, 4, 1);
+    Maths::Quaternion q1 = Maths::Quaternion(0.0f, 0.0f, 0.707f, 0.707f);
     Maths::Quaternion q2 = Maths::Quaternion(4, 6, 7, 1);
-    q2.Product(q1).Print();
+    q1.ToEulerAngles().Print();
+    Maths::Quaternion q3 = Maths::Quaternion::FromEulerAngles(Maths::Vector3(90, 10, 2));
+    //q3.Print();
 
     return 0;
 }
