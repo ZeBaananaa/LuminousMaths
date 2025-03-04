@@ -17,6 +17,12 @@ namespace Maths
 		y = a_b;
 	}
 
+	Vector2::Vector2(const float& a_a)
+	{
+		x = a_a;
+		y = a_a;
+	}
+
 	Vector2 Vector2::Add(const Vector2& a_v) const
 	{
 		return Vector2(x + a_v.x, y + a_v.y);
@@ -54,7 +60,7 @@ namespace Maths
 
 	float Vector2::Length() const
 	{
-		return Maths::Sqrt((x * x) + (y * y));
+		return Sqrt(x * x + y * y);
 	}
 
 	Vector2 Vector2::Normalize() const
