@@ -35,8 +35,9 @@
 
 # Others
 
-/Tests/Libs/glm/
-/Tests/Libs/googletest/
+/cmake-build-debug
 /Builds/**
 /out
-cmake-build-debug
+
+/Tests/Libs/
+!/Tests/Libs/CMakeLists.txt
