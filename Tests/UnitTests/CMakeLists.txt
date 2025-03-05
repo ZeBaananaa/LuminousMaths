@@ -1,5 +1,5 @@
 # Create an executable based on the main.cpp
-add_executable(L_MATHS_UT "main.cpp" "UT_Vector2.cpp" "UT_Matrix3.cpp")
+add_executable(L_MATHS_UT "main.cpp" "UT_Vector2.cpp" "UT_Quaternion.cpp" )
 
 # Link GTest & GLM to the L_MATHS_UT Library
 target_link_libraries(L_MATHS_UT PRIVATE L_MATHS GTest::gtest_main glm::glm)

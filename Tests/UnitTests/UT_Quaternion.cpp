@@ -2,219 +2,167 @@
 #include "gtest/gtest.h"
 #include "Matrix3.hpp"
 #include "Vector3.hpp"
+#include "Quaternion.hpp"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/string_cast.hpp"
+#include "Utils.hpp"
 
 namespace Maths
 {
-    float trace(const glm::mat3& mat)
+    bool QuaternionsEqual(Quaternion& quat1, glm::fquat& quat2, float tolerance = 1e-5f)
     {
-        return mat[0][0] + mat[1][1] + mat[2][2];
+        return ((abs(quat1.x - quat2.x) < tolerance) && (abs(quat1.y - quat2.y) < tolerance) && (abs(quat1.z - quat2.z) < tolerance) && (abs(quat1.w - quat2.w) < tolerance));
     }
 
-    TEST(Matrix3, ConstructorWithScalar)
+    bool VectorsEqual(Vector3& quat1, glm::fvec3& quat2, float tolerance = 1e-5f)
     {
+        return ((abs(quat1.x - quat2.x) < tolerance) && (abs(quat1.y - quat2.y) < tolerance) && (abs(quat1.z - quat2.z) < tolerance));
+    }
 
-        float scalar = 3.0f;
-        Matrix3 mat3(scalar);
-        glm::mat3 glmMat3(scalar);
-
-        for (int i = 0; i < 3; ++i)
+    void PrintGLMVec3(glm::fvec3& quat,bool todeg = false)
+    {
+        if (todeg)
         {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(mat3.mat[i][j], glmMat3[i][j]);
-            }
-        }
-    }
-
-    TEST(Matrix3, ConstructorWithArray)
-    {
-        std::array<std::array<float, 3>, 3> array = {{{1.0f, 2.0f, 3.0f}, {4.0f, 5.0f, 6.0f}, {7.0f, 8.0f, 9.0f}}};
-        Matrix3 mat3(array);
-        glm::mat3 glmMat3 = glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
-
-        for (int i = 0; i < 3; ++i)
+            std::cout << Maths::RadToDeg(quat.x) << ", " << Maths::RadToDeg(quat.y) << ", " << Maths::RadToDeg(quat.z) << '\n';
+        }else
         {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(mat3.mat[i][j], glmMat3[i][j]);
-            }
+            std::cout << quat.x << ", " << quat.y << ", " << quat.z << '\n';
         }
+        
     }
 
-    TEST(Matrix3, ConstructorWithVectors)
+    void PrintGLMQuat(glm::fquat& quat)
     {
-        Vector3 v1(1.0f, 2.0f, 3.0f);
-        Vector3 v2(4.0f, 5.0f, 6.0f);
-        Vector3 v3(7.0f, 8.0f, 9.0f);
-        Matrix3 mat3(v1, v2, v3);
-        glm::mat3 glmMat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
-
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(mat3.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        std::cout << quat.w << ", " << quat.x << ", " << quat.y << ", " << quat.z << '\n';
     }
 
-    TEST(Matrix3, AddScalar)
+    TEST(Quaternion, FirstTest)
     {
-        float scalar = 1.0f;
-        Matrix3 mat3(1.0f);
-        Matrix3 result = mat3 + scalar;
-        glm::mat3 glmMat3 = glm::mat3(1.0f) + scalar;
+        Quaternion q1 = Quaternion(5.0f, 4.0f, 3.0f, 1.0f);
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        glm::fquat q2 = glm::fquat(1.0f, 5.0f, 4.0f, 3.0f);
+
+        EXPECT_TRUE(QuaternionsEqual(q1, q2));
     }
 
-    TEST(Matrix3, AddMatrix)
+    TEST(Quaternion, Add)
     {
-        Matrix3 mat1(1.0f);
-        Matrix3 mat2(2.0f);
-        Matrix3 result = mat1 + mat2;
-        glm::mat3 glmMat3 = glm::mat3(3.0f);
+        Quaternion lq1 = Quaternion(5.4f, 4.22f, -3.13f, 1.48f);
+        Quaternion lq2 = Quaternion(1.254f, 7.15f, 4.1554f, -1.235f);
+        lq1 = lq1 + lq2;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.22f, -3.13f);
+        glm::fquat gq3 = glm::fquat(-1.235f, 1.254f, 7.15f, 4.1554f);
+        gq2 = gq2 + gq3;
+
+        EXPECT_TRUE(QuaternionsEqual(lq1, gq2));
     }
 
-    TEST(Matrix3, SubtractScalar)
+    TEST(Quaternion, Substract)
     {
-        float scalar = 1.0f;
-        Matrix3 mat3(3.0f);
-        Matrix3 result = mat3 - scalar;
-        glm::mat3 glmMat3 = glm::mat3(3.0f) - scalar;
+        Quaternion lq1 = Quaternion(5.4f, 4.22f, -3.13f, 1.48f);
+        Quaternion lq2 = Quaternion(1.254f, 7.15f, 4.1554f, -1.235f);
+        lq1 = lq1 - lq2;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.22f, -3.13f);
+        glm::fquat gq3 = glm::fquat(-1.235f, 1.254f, 7.15f, 4.1554f);
+        gq2 = gq2 - gq3;
+
+        EXPECT_TRUE(QuaternionsEqual(lq1, gq2));
     }
 
-    TEST(Matrix3, SubtractMatrix)
+    TEST(Quaternion, ProductQ)
     {
-        Matrix3 mat1(3.0f);
-        Matrix3 mat2(1.0f);
-        Matrix3 result = mat1 - mat2;
-        glm::mat3 glmMat3 = glm::mat3(2.0f);
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        Quaternion lq1 = Quaternion(5.4f, 4.22f, -3.13f, 1.48f);
+        Quaternion lq2 = Quaternion(1.25f, 7.15f, 4.15f, -1.23f);
+        lq1 = lq1 * lq2;
+
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.22f, -3.13f);
+        glm::fquat gq3 = glm::fquat(-1.23f, 1.25f, 7.15f, 4.15f);
+        gq2 = gq2 * gq3;
+
+        EXPECT_TRUE(QuaternionsEqual(lq1, gq2));
     }
 
-    TEST(Matrix3, MultiplyScalar)
-    {
-        float scalar = 2.0f;
-        Matrix3 mat3(1.0f);
-        Matrix3 result = mat3 * scalar;
-        glm::mat3 glmMat3 = glm::mat3(2.0f);
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+    TEST(Quaternion, ProductF)
+    {
+
+        Quaternion lq1 = Quaternion(5.4f, 4.22f, -3.13f, 1.48f);
+        lq1 = lq1 * 2.0f;
+
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.22f, -3.13f);
+        gq2 = gq2 * 2.0f;
+
+        EXPECT_TRUE(QuaternionsEqual(lq1, gq2));
     }
 
-    TEST(Matrix3, MultiplyMatrix)
+    TEST(Quaternion, Length)
     {
-        Matrix3 mat1(1.0f);
-        Matrix3 mat2(2.0f);
-        Matrix3 result = mat1 * mat2;
+        Quaternion lq1 = Quaternion(5.4f, 4.22f, -3.13f, 1.48f);
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.22f, -3.13f);
 
-        glm::mat3 glmMat1 = glm::mat3(1.0f);
-        glm::mat3 glmMat2 = glm::mat3(2.0f);
-        glm::mat3 glmResult = glmMat1 * glmMat2;
-
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmResult[i][j]);
-            }
-        }
+        EXPECT_FLOAT_EQ(lq1.Length(), glm::length(gq2));
     }
 
-    TEST(Matrix3, DivideScalar)
+    TEST(Quaternion, Normalize)
     {
-        float scalar = 2.0f;
-        Matrix3 mat3(4.0f);
-        Matrix3 result = mat3 / scalar;
-        glm::mat3 glmMat3 = glm::mat3(2.0f);
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        Quaternion lq1 = Quaternion(5.4f, 4.22f, -3.13f, 1.48f);
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.22f, -3.13f);
+
+        EXPECT_TRUE(QuaternionsEqual(lq1.Normalize(), glm::normalize(gq2)));
     }
 
-    TEST(Matrix3, Opposite)
+    TEST(Quaternion, Conjugate)
     {
-        Matrix3 mat3(1.0f);
-        Matrix3 result = mat3.Opposite();
-        glm::mat3 glmMat3 = glm::mat3(-1.0f);
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        Quaternion lq1 = Quaternion(5.4f, 4.22f, -3.13f, 1.48f);
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.22f, -3.13f);
+
+        EXPECT_TRUE(QuaternionsEqual(lq1.Conjugate(), glm::conjugate(gq2)));
     }
 
-    TEST(Matrix3, Transpose)
+    TEST(Quaternion, Opposite)
     {
-        Matrix3 mat3(Vector3(1.0f, 2.0f, 3.0f), Vector3(4.0f, 5.0f, 6.0f), Vector3(7.0f, 8.0f, 9.0f));
-        Matrix3 result = mat3.Transpose();
-        glm::mat3 glmMat3 = transpose(glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f));
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        Quaternion lq1 = Quaternion(5.4f, 4.22f, -3.13f, 1.48f);
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.22f, -3.13f);
+
+        EXPECT_TRUE(QuaternionsEqual(lq1.Opposite(), -gq2));
     }
 
-    TEST(Matrix3, Trace)
+    TEST(Quaternion, ToEulerAngles)
     {
-        Matrix3 mat3(Vector3(1.0f, 2.0f, 3.0f), Vector3(4.0f, 5.0f, 6.0f), Vector3(7.0f, 8.0f, 9.0f));
-        float result = mat3.Trace();
 
-        glm::mat3 glmMat = glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
+        Quaternion lq1 = Quaternion(5.4f, 4.6f, -3.13f, 1.48f);
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.6f, -3.13f);
 
-        float glmResult = trace(glmMat);
+        EXPECT_TRUE(VectorsEqual(lq1.Normalize().ToEulerAngles(false), glm::eulerAngles(glm::normalize(gq2))));
+    }
 
-        EXPECT_FLOAT_EQ(result, glmResult);
+    TEST(Quaternion, FromEulerAngles)
+    {
+
+        Quaternion lq2 = Quaternion::FromEulerAngles(Vector3(16.5f, 15, 150));
+        glm::fquat q = glm::fquat(glm::vec3(Maths::DegToRad(16.5f), Maths::DegToRad(15),Maths::DegToRad(150)));
+        EXPECT_TRUE(QuaternionsEqual(lq2, q));
+    }
+
+    
+    TEST(Quaternion, Slerp)
+    {
+
+        Quaternion lq1 = Quaternion(5.4f, 4.22f, -3.13f, 1.48f);
+        Quaternion lq2 = Quaternion(1.25f, 7.15f, 4.15f, -1.23f);
+        Quaternion q3 = Quaternion::Slerp(lq1.Normalize(), lq2.Normalize(), 0.5f);
+
+        glm::fquat gq2 = glm::fquat(1.48f, 5.4f, 4.22f, -3.13f);
+        glm::fquat gq3 = glm::fquat(-1.23f, 1.25f, 7.15f, 4.15f);
+        glm::fquat gq4 = glm::slerp(glm::normalize(gq2), glm::normalize(gq3), 0.5f);
+
+        EXPECT_TRUE(QuaternionsEqual(q3, gq4));
     }
 }

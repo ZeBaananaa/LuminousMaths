@@ -19,7 +19,7 @@
         Quaternion Normalize() const;
         Quaternion Conjugate() const;
         Quaternion Opposite() const;
-        Vector3 ToEulerAngles() const;
+        Vector3 ToEulerAngles(bool a_todeg) const;
 
         float Length() const;
         void Print() const;

@@ -61,7 +61,7 @@ namespace Maths {
 		return Quaternion(-x, -y, -z, -w);
 	}
 
-	Vector3 Quaternion::ToEulerAngles() const {
+	Vector3 Quaternion::ToEulerAngles(bool a_todeg) const {
 		float t_ysqr = y * y;
 
 		float t_0 = 2.0f * (w * x + y * z);
@@ -76,7 +76,11 @@ namespace Maths {
 		float t_4 = 1.0f - 2.0f * (t_ysqr + z * z);
 		float t_yaw = atan2f(t_3, t_4);
 
-		return Vector3(Maths::RadToDeg(t_roll), Maths::RadToDeg(t_pitch), Maths::RadToDeg(t_yaw));
+		Vector3 t_return = Vector3(t_roll, t_pitch, t_yaw);
+
+		if (a_todeg)
+			t_return = Vector3(Maths::RadToDeg(t_roll), Maths::RadToDeg(t_pitch), Maths::RadToDeg(t_yaw));
+		return t_return;
 	}
 
 
@@ -85,7 +89,9 @@ namespace Maths {
 	}
 
 	Quaternion Quaternion::FromEulerAngles(const Vector3 &a_v) {
-		Vector3 t_radvec = Vector3(Maths::DegToRad(a_v.x), Maths::DegToRad(a_v.y), Maths::DegToRad(a_v.z));
+
+
+		Vector3 t_radvec = Vector3(Maths::DegToRad(a_v.z), Maths::DegToRad(a_v.y), Maths::DegToRad(a_v.x));
 
 		const float t_cr = cos(t_radvec.z * 0.5f);
 		const float t_sr = sin(t_radvec.z * 0.5f);
@@ -106,6 +112,7 @@ namespace Maths {
 	}
 
 	Quaternion Quaternion::Slerp(const Quaternion &a_q1, const Quaternion &a_q2, float a_t) {
+		
 		Quaternion t_q1 = a_q1.Normalize();
 		Quaternion t_q2 = a_q2.Normalize();
 
@@ -129,6 +136,10 @@ namespace Maths {
 		Quaternion q5 = t_q1 * cosf(t_theta) + q3 * sinf(t_theta);
 
 		return Quaternion(Maths::Precise(q5.x), Maths::Precise(q5.y), Maths::Precise(q5.z), Maths::Precise(q5.w));
+
+
+
+
 	}
 
 	Quaternion Quaternion::operator+(const Quaternion &a_q) const {
