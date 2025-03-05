@@ -10,4 +10,5 @@ namespace Maths
 	float LUMINOUS_MATHS_API Sqrt(const float& a_a);
 	float LUMINOUS_MATHS_API DegToRad(const float& a_deg);
 	float LUMINOUS_MATHS_API RadToDeg(const float& a_rad);
+	float LUMINOUS_MATHS_API Precise(const float& a_f);
 }

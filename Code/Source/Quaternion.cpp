@@ -1,39 +1,36 @@
 ﻿#include "Quaternion.hpp"
+
+#include <cmath>
+
 #include "Vector3.hpp"
 #include <iostream>
 #include "Utils.hpp"
 
 
-namespace Maths
-{
-	Quaternion::Quaternion(float a_x, float a_y, float a_z, float a_w)
-	{
+namespace Maths {
+	Quaternion::Quaternion(float a_x, float a_y, float a_z, float a_w) {
 		w = a_w;
 		x = a_x;
 		y = a_y;
 		z = a_z;
 	}
 
-	Quaternion::Quaternion(Vector3 a_v)
-	{
+	Quaternion::Quaternion(Vector3 a_v) {
 		x = a_v.x;
 		y = a_v.y;
 		z = a_v.z;
 		w = 0.0f;
 	}
 
-	Quaternion Quaternion::Add(const Quaternion& a_q) const
-	{
+	Quaternion Quaternion::Add(const Quaternion &a_q) const {
 		return Quaternion(x + a_q.x, y + a_q.y, z + a_q.z, w + a_q.w);
 	}
 
-	Quaternion Quaternion::Substract(const Quaternion& a_q) const
-	{
+	Quaternion Quaternion::Substract(const Quaternion &a_q) const {
 		return Quaternion(x - a_q.x, y - a_q.y, z - a_q.z, w - a_q.w);
 	}
 
-	Quaternion Quaternion::Product(const Quaternion& a_q) const
-	{
+	Quaternion Quaternion::Product(const Quaternion &a_q) const {
 		return Quaternion
 		(
 			w * a_q.x + x * a_q.w + y * a_q.z - z * a_q.y,
@@ -44,34 +41,27 @@ namespace Maths
 		);
 	}
 
-	Quaternion Quaternion::Product(const float a_a) const
-	{
+	Quaternion Quaternion::Product(const float a_a) const {
 		return Quaternion(x * a_a, y * a_a, z * a_a, w * a_a);
 	}
 
-	float Quaternion::Length() const
-	{
-		return Maths::Sqrt((x * x) + (y * y) + (z * z) + (w * w));
+	float Quaternion::Length() const {
+		return Sqrt((x * x) + (y * y) + (z * z) + (w * w));
 	}
 
-	Quaternion Quaternion::Normalize() const
-	{
+	Quaternion Quaternion::Normalize() const {
 		return Quaternion(x / Length(), y / Length(), z / Length(), w / Length());
 	}
 
-	Quaternion Quaternion::Conjugate() const
-	{
+	Quaternion Quaternion::Conjugate() const {
 		return Quaternion(-x, -y, -z, w);
 	}
 
-	Quaternion Quaternion::Opposite() const
-	{
+	Quaternion Quaternion::Opposite() const {
 		return Quaternion(-x, -y, -z, -w);
 	}
 
-	Vector3 Quaternion::ToEulerAngles() const
-	{
-		
+	Vector3 Quaternion::ToEulerAngles() const {
 		float t_ysqr = y * y;
 
 		float t_0 = 2.0f * (w * x + y * z);
@@ -79,7 +69,7 @@ namespace Maths
 		float t_roll = atan2f(t_0, t_1);
 
 		float t_2 = 2.0f * (w * y - z * x);
-		if (t_2 < -1.0f) { t_2 = -1.0f; }else if (t_2 > 1.0f) { t_2 = 1.0f; }
+		if (t_2 < -1.0f) { t_2 = -1.0f; } else if (t_2 > 1.0f) { t_2 = 1.0f; }
 		float t_pitch = asinf(t_2);
 
 		float t_3 = 2.0f * (w * z + x * y);
@@ -90,14 +80,11 @@ namespace Maths
 	}
 
 
-	void Quaternion::Print() const
-	{
+	void Quaternion::Print() const {
 		std::cout << w << ", " << x << ", " << y << ", " << z << '\n';
 	}
 
-	Quaternion Quaternion::FromEulerAngles(const Vector3& a_v)
-	{
-
+	Quaternion Quaternion::FromEulerAngles(const Vector3 &a_v) {
 		Vector3 t_radvec = Vector3(Maths::DegToRad(a_v.x), Maths::DegToRad(a_v.y), Maths::DegToRad(a_v.z));
 
 		const float t_cr = cos(t_radvec.z * 0.5f);
@@ -112,14 +99,13 @@ namespace Maths
 			t_sr * t_cp * t_cy - t_cr * t_sp * t_sy,
 			t_cr * t_sp * t_cy + t_sr * t_cp * t_sy,
 			t_cr * t_cp * t_sy - t_sr * t_sp * t_cy,
-			t_cr* t_cp* t_cy + t_sr * t_sp * t_sy
+			t_cr * t_cp * t_cy + t_sr * t_sp * t_sy
 		);
 
 		return t_q;
 	}
 
-	Quaternion Quaternion::Slerp(const Quaternion& a_q1, const Quaternion& a_q2, float a_t)
-	{
+	Quaternion Quaternion::Slerp(const Quaternion &a_q1, const Quaternion &a_q2, float a_t) {
 		Quaternion t_q1 = a_q1.Normalize();
 		Quaternion t_q2 = a_q2.Normalize();
 
@@ -143,61 +129,49 @@ namespace Maths
 		Quaternion q5 = t_q1 * cosf(t_theta) + q3 * sinf(t_theta);
 
 		return Quaternion(Maths::Precise(q5.x), Maths::Precise(q5.y), Maths::Precise(q5.z), Maths::Precise(q5.w));
-
 	}
 
-	Quaternion Quaternion::operator+(const Quaternion& a_q) const
-	{
+	Quaternion Quaternion::operator+(const Quaternion &a_q) const {
 		return Add(a_q);
 	}
 
-	Quaternion Quaternion::operator-(const Quaternion& a_q) const
-	{
+	Quaternion Quaternion::operator-(const Quaternion &a_q) const {
 		return Substract(a_q);
 	}
 
-	Quaternion Quaternion::operator*(const float& a_a) const
-	{
+	Quaternion Quaternion::operator*(const float &a_a) const {
 		return Product(a_a);
 	}
 
-	Quaternion Quaternion::operator*(const Quaternion& a_q) const
-	{
+	Quaternion Quaternion::operator*(const Quaternion &a_q) const {
 		return Product(a_q);
 	}
 
-	void Quaternion::operator+=(const Quaternion& a_v)
-	{
+	void Quaternion::operator+=(const Quaternion &a_v) {
 		*this = Add(a_v);
 	}
 
-	void Quaternion::operator*=(const float& a_a)
-	{
+	void Quaternion::operator*=(const float &a_a) {
 		*this = Product(a_a);
 	}
 
-	void Quaternion::operator*=(const Quaternion& a_v)
-	{
+	void Quaternion::operator*=(const Quaternion &a_v) {
 		*this = Product(a_v);
 	}
 
-	void Quaternion::operator-=(const Quaternion& a_v)
-	{
+	void Quaternion::operator-=(const Quaternion &a_v) {
 		*this = Substract(a_v);
 	}
 
-	bool Quaternion::operator==(const Quaternion& a_q) const
-	{
+	bool Quaternion::operator==(const Quaternion &a_q) const {
 		return x == a_q.x && y == a_q.y && z == a_q.z && w == a_q.w;
 	}
 
-	bool Quaternion::operator!=(const Quaternion& a_q) const
-	{
+	bool Quaternion::operator!=(const Quaternion &a_q) const {
 		return !(x == a_q.x && y == a_q.y && z == a_q.z && w == a_q.w);
 	}
 
 	Quaternion Quaternion::Identity = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 	Quaternion Quaternion::Zero = Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
 	Quaternion Quaternion::One = Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
-
 }

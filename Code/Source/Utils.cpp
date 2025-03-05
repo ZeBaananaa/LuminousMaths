@@ -28,7 +28,7 @@ namespace Maths
     float Precise(const float& a_f)
     {
         float t_f = a_f;
-        if (fabs(t_f) < PRECISION)
+        if (std::fabs(t_f) < PRECISION)
         {
             t_f = 0.0f;
         }
