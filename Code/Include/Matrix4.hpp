@@ -14,8 +14,6 @@ namespace Maths
 	public:
 		std::array<std::array<float, 4>, 4> mat{};
 
-		float mat[4][4];
-
 		Matrix4() = default;
 		explicit Matrix4(const float& a_a);
 		explicit Matrix4(const float(&a_mat)[4][4]);
