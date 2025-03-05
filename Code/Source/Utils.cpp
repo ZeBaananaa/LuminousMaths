@@ -1,4 +1,5 @@
 #include "Utils.hpp"
+#include <cmath>
 
 namespace Maths
 {
@@ -22,5 +23,15 @@ namespace Maths
     float RadToDeg(const float& a_rad)
     {
         return a_rad * (180.0f / m_PI);
+    }
+
+    float Precise(const float& a_f)
+    {
+        float t_f = a_f;
+        if (fabs(t_f) < PRECISION)
+        {
+            t_f = 0.0f;
+        }
+        return t_f;
     }
 }

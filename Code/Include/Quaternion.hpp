@@ -16,12 +16,12 @@
         Quaternion Substract(const Quaternion& a_q) const;
         Quaternion Product(const Quaternion& a_q) const;
         Quaternion Product(const float a_a) const;
-        float Length() const;
         Quaternion Normalize() const;
         Quaternion Conjugate() const;
         Quaternion Opposite() const;
         Vector3 ToEulerAngles() const;
 
+        float Length() const;
         void Print() const;
 
         static Quaternion FromEulerAngles(const Vector3& a_v);

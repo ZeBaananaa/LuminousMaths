@@ -9,4 +9,5 @@ namespace Maths
 	float Sqrt(const float& a_a);
 	float DegToRad(const float& a_deg);
 	float RadToDeg(const float& a_rad);
+	float Precise(const float& a_f);
 }
