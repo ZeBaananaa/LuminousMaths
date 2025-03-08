@@ -9,13 +9,13 @@
 
 namespace Maths
 {
-    bool MatricesAreEqual(Matrix4& mat1, glm::mat4& mat2, float tolerance = 1e-6f)
+    bool MatricesAreEqual(const Matrix4& mat1, const glm::mat4& mat2, float tolerance = 1e-6f)
     {
-		for (int i = 0; i < 4; ++i)
-			for (int j = 0; j < 4; ++j)
-				if (std::abs(mat1.mat[i][j] - mat2[i][j]) > tolerance)
-					return false;
-		return true;
+        for (int i = 0; i < 4; ++i)
+            for (int j = 0; j < 4; ++j)
+                if (std::abs(mat1.mat[i][j] - mat2[i][j]) > tolerance)
+                    return false;
+        return true;
     }
 
     float trace(glm::mat4& mat)
@@ -28,36 +28,38 @@ namespace Maths
         float scalar = 4.0f;
         Matrix4 mat4(scalar);
         glm::mat4 glmMat4(scalar);
-
-        for (int i = 0; i < 4; ++i)
-        {
-            for (int j = 0; j < 4; ++j)
-            {
-                EXPECT_FLOAT_EQ(mat4.mat[i][j], glmMat4[i][j]);
-            }
-        }
+        EXPECT_TRUE(MatricesAreEqual(mat4, glmMat4));
     }
 
     TEST(Matrix4, ConstructorWithArray)
     {
-        std::array<std::array<float, 4>, 4> array = {{{1.0f, 2.0f, 3.0f, 4.0f}, {5.0f, 6.0f, 7.0f, 8.0f}, {9.0f, 10.0f, 11.0f, 12.f}, {13.0f, 14.0f, 15.0f, 16.0f}}};
+        std::array<std::array<float, 4>, 4> array = { {{1.0f, 2.0f, 3.0f, 4.0f}, {5.0f, 6.0f, 7.0f, 8.0f}, {9.0f, 10.0f, 11.0f, 12.f}, {13.0f, 14.0f, 15.0f, 16.0f}} };
         Matrix4 mat4(array);
-        glm::mat4 glmMat4 = glm::mat4(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.f, 13.0f, 14.0f, 15.0f, 16.0f);
-
+        glm::mat4 glmMat4(1.0f);
+        for (int i = 0; i < 4; ++i)
+            for (int j = 0; j < 4; ++j)
+                glmMat4[i][j] = array[i][j];
         EXPECT_TRUE(MatricesAreEqual(mat4, glmMat4));
     }
 
-    TEST(Matrix4, ConstructorWithVectors)
+    TEST(Matrix4, ConstructorWithArrays)
     {
-        Vector4 v1(1.0f, 2.0f, 3.0f, 4.0f);
-        Vector4 v2(5.0f, 6.0f, 7.0f, 8.0f);
-        Vector4 v3(9.0f, 10.0f, 11.0f, 12.f);
-        Vector4 v4(13.0f, 14.0f, 15.0f, 16.0f);
-        Matrix4 mat4(v1, v2, v3, v4);
-        glm::mat4 glmMat4(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.f, 13.0f, 14.0f, 15.0f, 16.0f);
+        std::array<float, 4> col1 = { 1.0f, 2.0f, 3.0f, 4.0f };
+        std::array<float, 4> col2 = { 5.0f, 6.0f, 7.0f, 8.0f };
+        std::array<float, 4> col3 = { 9.0f, 10.0f, 11.0f, 12.0f };
+        std::array<float, 4> col4 = { 13.0f, 14.0f, 15.0f, 16.0f };
+
+        std::array<std::array<float, 4>, 4> matrixData = { col1, col2, col3, col4 };
+        Matrix4 mat4(matrixData);
+
+        glm::mat4 glmMat4(1.0f, 2.0f, 3.0f, 4.0f,
+            5.0f, 6.0f, 7.0f, 8.0f,
+            9.0f, 10.0f, 11.0f, 12.0f,
+            13.0f, 14.0f, 15.0f, 16.0f);
 
         EXPECT_TRUE(MatricesAreEqual(mat4, glmMat4));
     }
+
 
     TEST(Matrix4, AddScalar)
     {
@@ -143,22 +145,23 @@ namespace Maths
 
     TEST(Matrix4, Transpose)
     {
-        Matrix4 mat4(Vector4(1.0f, 2.0f, 3.0f, 4.0f), Vector4(5.0f, 6.0f, 7.0f, 8.0f), Vector4(9.0f, 10.0f, 11.0f, 12.0f), Vector4(13.0f, 14.0f, 15.0f, 16.0f));
+        Matrix4 mat4({ {{1.0f, 2.0f, 3.0f, 4.0f}, {5.0f, 6.0f, 7.0f, 8.0f}, {9.0f, 10.0f, 11.0f, 12.0f}, {13.0f, 14.0f, 15.0f, 16.0f}} });
         Matrix4 result = mat4.Transpose();
-        glm::mat4 glmMat4 = transpose(glm::mat4(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.0f, 13.0f, 14.0f, 15.0f, 16.0f));
-
+        glm::mat4 glmMat4(1.0f);
+        for (int i = 0; i < 4; ++i)
+            for (int j = 0; j < 4; ++j)
+                glmMat4[i][j] = mat4.mat[j][i];
         EXPECT_TRUE(MatricesAreEqual(result, glmMat4));
     }
 
     TEST(Matrix4, Trace)
     {
-        Matrix4 mat4(Vector4(1.0f, 2.0f, 3.0f, 4.0f), Vector4(5.0f, 6.0f, 7.0f, 8.0f), Vector4(9.0f, 10.0f, 11.0f, 12.0f), Vector4(13.0f, 14.0f, 15.0f, 16.0f));
+        Matrix4 mat4({{{1.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 4.0f}}});
         float result = mat4.Trace();
-
-        glm::mat4 glmMat = glm::mat4(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f, 10.0f, 11.0f, 12.f, 13.0f, 14.0f, 15.0f, 16.0f);
-
+        glm::mat4 glmMat(1.0f);
+        for (int i = 0; i < 4; ++i)
+            glmMat[i][i] = i + 1;
         float glmResult = trace(glmMat);
-
         EXPECT_FLOAT_EQ(result, glmResult);
     }
 }
