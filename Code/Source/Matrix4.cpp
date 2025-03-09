@@ -157,6 +157,7 @@ namespace Maths
 		return l_m;
 	}
 
+
 	Matrix4 Matrix4::Subtract(const Matrix4& a_m) const
 	{
 		Matrix4 l_m;

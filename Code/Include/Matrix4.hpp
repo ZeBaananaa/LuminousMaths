@@ -12,7 +12,12 @@ namespace Maths
 	class LUMINOUS_MATHS_API Matrix4
 	{
 	public:
-		std::array<std::array<float, 4>, 4> mat{};
+		std::array<std::array<float, 4>, 4> mat = {{
+	{0.0f, 0.0f, 0.0f, 0.0f},
+	{0.0f, 0.0f, 0.0f, 0.0f},
+	{0.0f, 0.0f, 0.0f, 0.0f},
+	{0.0f, 0.0f, 0.0f, 0.0f}
+	}};
 
 		Matrix4() = default;
 		explicit Matrix4(const float& a_a);

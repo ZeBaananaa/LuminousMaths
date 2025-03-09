@@ -86,10 +86,11 @@ namespace Maths
         float scalar = 1.0f;
         Matrix4 mat4(4.0f);
         Matrix4 result = mat4 - scalar;
-        glm::mat4 glmMat4 = glm::mat4(3.0f) - scalar;
+        glm::mat4 glmMat4 = glm::mat4(4.0f) - scalar;
 
         EXPECT_TRUE(MatricesAreEqual(result, glmMat4));
     }
+
 
     TEST(Matrix4, SubtractMatrix)
     {
