@@ -42,7 +42,7 @@ namespace Maths
         EXPECT_TRUE(MatricesAreEqual(mat4, glmMat4));
     }
 
-    TEST(Matrix4, ConstructorWithArrays)
+    TEST(Matrix4, ConstructorWithVectors)
     {
         std::array<float, 4> col1 = { 1.0f, 2.0f, 3.0f, 4.0f };
         std::array<float, 4> col2 = { 5.0f, 6.0f, 7.0f, 8.0f };
