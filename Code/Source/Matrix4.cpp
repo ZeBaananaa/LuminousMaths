@@ -91,7 +91,7 @@ namespace Maths
 		{
 			for (int j = 0; j < 4; ++j)
 			{
-				mat[i][j] = a_a;
+				mat[i][j] = (i == j) ? a_a : 0.0f;
 			}
 		}
 	}
@@ -120,6 +120,17 @@ namespace Maths
 		return l_m;
 	}
 
+	Matrix4::Matrix4(const std::array<std::array<float, 4>, 4>& a_mat)
+	{
+		for (int i = 0; i < 4; ++i)
+		{
+			for (int j = 0; j < 4; ++j)
+			{
+				mat[i][j] = a_mat[i][j];
+			}
+		}
+	}
+
 	Matrix4 Matrix4::Add(const Matrix4& a_m) const
 	{
 		Matrix4 l_m;
@@ -145,6 +156,7 @@ namespace Maths
 		}
 		return l_m;
 	}
+
 
 	Matrix4 Matrix4::Subtract(const Matrix4& a_m) const
 	{

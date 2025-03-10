@@ -2,20 +2,27 @@
 
 #include "MathsExport.hpp"
 
+#include <array>
 #include "Vector3.hpp"
 
 namespace Maths
 {
+	class Vector4;
+
 	class LUMINOUS_MATHS_API Matrix4
 	{
 	public:
-
-		float mat[4][4];
+		std::array<std::array<float, 4>, 4> mat = {{
+	{0.0f, 0.0f, 0.0f, 0.0f},
+	{0.0f, 0.0f, 0.0f, 0.0f},
+	{0.0f, 0.0f, 0.0f, 0.0f},
+	{0.0f, 0.0f, 0.0f, 0.0f}
+	}};
 
 		Matrix4() = default;
-
 		explicit Matrix4(const float& a_a);
 		explicit Matrix4(const float(&a_mat)[4][4]);
+		explicit Matrix4(const std::array<std::array<float, 4>, 4>& a_mat);
 
 		Matrix4 Add(const float& a_a) const;
 		Matrix4 Add(const Matrix4& a_m) const;
