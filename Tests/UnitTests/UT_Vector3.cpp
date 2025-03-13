@@ -26,8 +26,8 @@ namespace Maths
     TEST(Vector3, ConstructorOneFloat)
     {
         float scalar = 3.0f;
-        Vector3 vec1(scalar,scalar,scalar);
-        glm::vec3 vec2(scalar,scalar,scalar);
+        Vector3 vec1(scalar);
+        glm::vec3 vec2(scalar);
 
         EXPECT_TRUE(VectorsAreEqual(vec1, vec2));
     }

@@ -11,7 +11,7 @@ namespace Maths
 
 		explicit Vector3() = default;
 		explicit Vector3(const float& a_a, const float& a_b, const float& a_c);
-		explicit Vector3(const float& a);
+		explicit Vector3(const float& a_a);
 
 		Vector3 Add(const Vector3& a_v) const;
 		Vector3 Add(const float& a_a) const;
