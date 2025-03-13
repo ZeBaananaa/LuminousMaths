@@ -250,6 +250,19 @@ namespace Maths
         EXPECT_FLOAT_EQ(result, gResult);
     }
 
+    TEST(Vector3, CrossProduct)
+    {
+        Vector3 vec1(1.0f, 0.0f, 0.0f);
+        Vector3 vec2(0.0f, 1.0f, 0.0f);
+        Vector3 result = vec1.CrossProduct(vec2);
+
+        glm::vec3 glmVec1(1.0f, 0.0f, 0.0f);
+        glm::vec3 glmVec2(0.0f, 1.0f, 0.0f);
+        glm::vec3 gResult = glm::cross(glmVec1, glmVec2);
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
+    }
+
     TEST(Vector3, Zero)
     {
         Vector3 vec1 = Vector3::Zero;
