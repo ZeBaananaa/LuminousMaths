@@ -7,7 +7,7 @@ cmake_minimum_required(VERSION 3.20)
 
 # Define Project Name
 project(LuminousMaths
-        VERSION 1.0.0
+        VERSION 1.0.1
         LANGUAGES CXX)
 
 # Define output build folder
@@ -44,7 +44,7 @@ target_include_directories(${LM_LIB_NAME} PUBLIC "Code/Include")
 target_compile_definitions(${LM_LIB_NAME} PRIVATE LUMINOUS_MATHS_EXPORTS)
 
 # Define C++ Standard Version
-target_compile_features(${LM_LIB_NAME} PRIVATE cxx_std_20)
+target_compile_features(${LM_LIB_NAME} PRIVATE cxx_std_23)
 
 # Disable lib prefix
 set_target_properties(${LM_LIB_NAME} PROPERTIES PREFIX "")
