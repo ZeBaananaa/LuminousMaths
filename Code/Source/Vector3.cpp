@@ -18,6 +18,13 @@ namespace Maths
 		y = a_b;
 		z = a_c;
 	}
+	
+	Vector3::Vector3(const float& a)
+	{
+		x = a;
+		y = a;
+		z = a;
+	}
 
 	Vector3 Vector3::Add(const Vector3& a_v) const
 	{

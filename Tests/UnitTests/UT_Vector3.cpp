@@ -1,220 +1,292 @@
-#include <glm/glm.hpp>
-#include "gtest/gtest.h"
-#include "Matrix3.hpp"
 #include "Vector3.hpp"
+#include "gtest/gtest.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/string_cast.hpp"
 
+#include <glm/glm.hpp>
+
 namespace Maths
 {
-    float trace(const glm::mat3& mat)
+   class Vector3;
+
+    bool VectorsAreEqual(Vector3& vec1, glm::vec3& vec2)
     {
-        return mat[0][0] + mat[1][1] + mat[2][2];
+        if (vec1.x != vec2.x || vec1.y != vec2.y || vec1.z != vec2.z)
+            return false;
+
+        return true;
     }
 
-    TEST(Matrix3, ConstructorWithScalar)
+    float trace(glm::vec3& vec)
     {
+        return vec.x + vec.y + vec.z;
+    }
 
+    TEST(Vector3, ConstructorOneFloat)
+    {
         float scalar = 3.0f;
-        Matrix3 mat3(scalar);
-        glm::mat3 glmMat3(scalar);
+        Vector3 vec1(scalar,scalar,scalar);
+        glm::vec3 vec2(scalar,scalar,scalar);
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(mat3.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        EXPECT_TRUE(VectorsAreEqual(vec1, vec2));
     }
 
-    TEST(Matrix3, ConstructorWithArray)
+    TEST(Vector3, ConstructorThreeFloats)
     {
-        std::array<std::array<float, 3>, 3> array = {{{1.0f, 2.0f, 3.0f}, {4.0f, 5.0f, 6.0f}, {7.0f, 8.0f, 9.0f}}};
-        Matrix3 mat3(array);
-        glm::mat3 glmMat3 = glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
+        float val1 = 3.0f;
+        float val2 = 8.0f;
+        float val3 = 5.0f;
+        Vector3 vec1(val1, val2, val3);
+        glm::vec3 vec2(val1, val2, val3);
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(mat3.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        EXPECT_TRUE(VectorsAreEqual(vec1, vec2));
     }
 
-    TEST(Matrix3, ConstructorWithVectors)
-    {
-        Vector3 v1(1.0f, 2.0f, 3.0f);
-        Vector3 v2(4.0f, 5.0f, 6.0f);
-        Vector3 v3(7.0f, 8.0f, 9.0f);
-        Matrix3 mat3(v1, v2, v3);
-        glm::mat3 glmMat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
-
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(mat3.mat[i][j], glmMat3[i][j]);
-            }
-        }
-    }
-
-    TEST(Matrix3, AddScalar)
+    TEST(Vector3, AddScalarOperator)
     {
         float scalar = 1.0f;
-        Matrix3 mat3(1.0f);
-        Matrix3 result = mat3 + scalar;
-        glm::mat3 glmMat3 = glm::mat3(1.0f) + scalar;
+        Vector3 vec1(1.0f);
+        Vector3 result = vec1 + scalar;
+        glm::vec3 vec2 = glm::vec3(1.0f) + scalar;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        EXPECT_TRUE(VectorsAreEqual(result, vec2));
     }
 
-    TEST(Matrix3, AddMatrix)
+    TEST(Vector3, AddVectorOperator)
     {
-        Matrix3 mat1(1.0f);
-        Matrix3 mat2(2.0f);
-        Matrix3 result = mat1 + mat2;
-        glm::mat3 glmMat3 = glm::mat3(3.0f);
+        Vector3 vec1(1.0f);
+        Vector3 vec2(2.0f);
+        Vector3 result = vec1 + vec2;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        glm::vec3 vec3 = glm::vec3(1.0f);
+        glm::vec3 vec4 = glm::vec3(2.0f);
+        glm::vec3 gResult = vec3 + vec4;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
     }
 
-    TEST(Matrix3, SubtractScalar)
+    TEST(Vector3, AddScalarFunc)
     {
         float scalar = 1.0f;
-        Matrix3 mat3(3.0f);
-        Matrix3 result = mat3 - scalar;
-        glm::mat3 glmMat3 = glm::mat3(3.0f) - scalar;
+        Vector3 vec1(1.0f);
+        Vector3 result = vec1.Add(scalar);
+        glm::vec3 vec2 = glm::vec3(1.0f) + scalar;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        EXPECT_TRUE(VectorsAreEqual(result, vec2));
     }
 
-    TEST(Matrix3, SubtractMatrix)
+    TEST(Vector3, AddVectorFunc)
     {
-        Matrix3 mat1(3.0f);
-        Matrix3 mat2(1.0f);
-        Matrix3 result = mat1 - mat2;
-        glm::mat3 glmMat3 = glm::mat3(2.0f);
+        Vector3 vec1(1.0f);
+        Vector3 vec2(2.0f);
+        Vector3 result = vec1.Add(vec2);
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        glm::vec3 vec3 = glm::vec3(1.0f);
+        glm::vec3 vec4 = glm::vec3(2.0f);
+        glm::vec3 gResult = vec3 + vec4;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
     }
 
-    TEST(Matrix3, MultiplyScalar)
+    TEST(Vector3, SubtractScalarOperator)
     {
-        float scalar = 2.0f;
-        Matrix3 mat3(1.0f);
-        Matrix3 result = mat3 * scalar;
-        glm::mat3 glmMat3 = glm::mat3(2.0f);
+        float scalar = 1.f;
+        Vector3 vec1(3.0f);
+        Vector3 result = vec1 - scalar;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        glm::vec3 vec3 = glm::vec3(3.0f);
+        glm::vec3 gResult = vec3 - scalar;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
     }
 
-    TEST(Matrix3, MultiplyMatrix)
+    TEST(Vector3, SubtractScalarFunc)
     {
-        Matrix3 mat1(1.0f);
-        Matrix3 mat2(2.0f);
-        Matrix3 result = mat1 * mat2;
+        float scalar = 1.f;
+        Vector3 vec1(3.0f);
+        Vector3 result = vec1.Subtract(scalar);
 
-        glm::mat3 glmMat1 = glm::mat3(1.0f);
-        glm::mat3 glmMat2 = glm::mat3(2.0f);
-        glm::mat3 glmResult = glmMat1 * glmMat2;
+        glm::vec3 vec3 = glm::vec3(3.0f);
+        glm::vec3 gResult = vec3 - scalar;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmResult[i][j]);
-            }
-        }
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
     }
 
-    TEST(Matrix3, DivideScalar)
+    TEST(Vector3, SubtractVectorOperator)
     {
-        float scalar = 2.0f;
-        Matrix3 mat3(4.0f);
-        Matrix3 result = mat3 / scalar;
-        glm::mat3 glmMat3 = glm::mat3(2.0f);
+        Vector3 vec1(3.0f);
+        Vector3 vec2(5.0f);
+        Vector3 result = vec1 - vec2;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        glm::vec3 vec3 = glm::vec3(3.0f);
+        glm::vec3 vec4 = glm::vec3(5.0f);
+        glm::vec3 gResult = vec3 - vec4;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
     }
 
-    TEST(Matrix3, Opposite)
+    TEST(Vector3, SubtractVectorFunc)
     {
-        Matrix3 mat3(1.0f);
-        Matrix3 result = mat3.Opposite();
-        glm::mat3 glmMat3 = glm::mat3(-1.0f);
+        Vector3 vec1(3.0f);
+        Vector3 vec2(5.0f);
+        Vector3 result = vec1.Subtract(vec2);
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        glm::vec3 vec3 = glm::vec3(3.0f);
+        glm::vec3 vec4 = glm::vec3(5.0f);
+        glm::vec3 gResult = vec3 - vec4;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
     }
 
-    TEST(Matrix3, Transpose)
+    TEST(Vector3, ProductScalarOperator)
     {
-        Matrix3 mat3(Vector3(1.0f, 2.0f, 3.0f), Vector3(4.0f, 5.0f, 6.0f), Vector3(7.0f, 8.0f, 9.0f));
-        Matrix3 result = mat3.Transpose();
-        glm::mat3 glmMat3 = transpose(glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f));
+        float scalar = 3.f;;
+        Vector3 vec1(5.0f);
+        Vector3 result = vec1 * scalar;
 
-        for (int i = 0; i < 3; ++i)
-        {
-            for (int j = 0; j < 3; ++j)
-            {
-                EXPECT_FLOAT_EQ(result.mat[i][j], glmMat3[i][j]);
-            }
-        }
+        glm::vec3 vec2 = glm::vec3(5.0f);
+        glm::vec3 gResult = vec2 * scalar;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
     }
 
-    TEST(Matrix3, Trace)
+    TEST(Vector3, ProductScalarFunc)
     {
-        Matrix3 mat3(Vector3(1.0f, 2.0f, 3.0f), Vector3(4.0f, 5.0f, 6.0f), Vector3(7.0f, 8.0f, 9.0f));
-        float result = mat3.Trace();
+        float scalar = 3.f;;
+        Vector3 vec1(5.0f);
+        Vector3 result = vec1.Product(scalar);
 
-        glm::mat3 glmMat = glm::mat3(1.0f, 2.0f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f, 8.0f, 9.0f);
+        glm::vec3 vec2 = glm::vec3(5.0f);
+        glm::vec3 gResult = vec2 * scalar;
 
-        float glmResult = trace(glmMat);
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
+    }
 
-        EXPECT_FLOAT_EQ(result, glmResult);
+    TEST(Vector3, ProductVectorOperator)
+    {
+        Vector3 vec1(3.0f);
+        Vector3 vec2(5.0f);
+        Vector3 result = vec1 * vec2;
+
+        glm::vec3 vec3 = glm::vec3(3.0f);
+        glm::vec3 vec4 = glm::vec3(5.0f);
+        glm::vec3 gResult = vec3 * vec4;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
+    }
+
+    TEST(Vector3, ProductVectorFunc)
+    {
+        Vector3 vec1(3.0f);
+        Vector3 vec2(5.0f);
+        Vector3 result = vec1.Product(vec2);
+
+        glm::vec3 vec3 = glm::vec3(3.0f);
+        glm::vec3 vec4 = glm::vec3(5.0f);
+        glm::vec3 gResult = vec3 * vec4;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
+    }
+
+    TEST(Vector3, InvertOperator)
+    {
+        Vector3 vec1(2.0f, 5.0f, 7.0f);
+        Vector3 result = Vector3(1.0f / vec1.x, 1.0f / vec1.y, 1.0f / vec1.z);
+
+        glm::vec3 glmVec1 = glm::vec3(2.0f, 5.0f, 7.0f);
+        glm::vec3 gResult = 1.0f / glmVec1;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
+    }
+
+    TEST(Vector3, InvertFunc)
+    {
+        Vector3 vec1(2.0f, 5.0f, 7.0f);
+        Vector3 result = vec1.Invert();
+
+        glm::vec3 glmVec1 = glm::vec3(2.0f, 5.0f, 7.0f);
+        glm::vec3 gResult = 1.0f / glmVec1;
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
+    }
+
+    TEST(Vector3, Normalize)
+    {
+        Vector3 vec1(4.0f);
+        Vector3 vec2(3.0f);
+        Vector3 result = vec1 * vec2;
+        result = result.Normalize();
+
+        glm::vec3 v3 = glm::vec3(4.0f);
+        glm::vec3 v4 = glm::vec3(3.0f);
+        glm::vec3 gResult = v3 * v4;
+        gResult = normalize(gResult);
+
+        EXPECT_TRUE(VectorsAreEqual(result, gResult));
+    }
+
+    TEST(Vector3, Length)
+    {
+        Vector3 vec1(4.0f, 4.0f, 4.0f);
+        float result = vec1.Length();
+
+        glm::vec3 vec2 = glm::vec3(4.0f, 4.0f, 4.0f);
+        float gResult = length(vec2);
+
+        EXPECT_FLOAT_EQ(result, gResult);
+    }
+
+    TEST(Vector3, DotProduct)
+    {
+        Vector3 vec1(3.0f);
+        Vector3 vec2(7.0f);
+        float result = vec1.DotProduct(vec2);
+
+        glm::vec3 vec3 = glm::vec3(3.0);
+        glm::vec3 vec4 = glm::vec3(7.0);
+        float gResult = dot(vec3, vec4);
+
+        EXPECT_FLOAT_EQ(result, gResult);
+    }
+
+    TEST(Vector3, Zero)
+    {
+        Vector3 vec1 = Vector3::Zero;
+        glm::vec3 vec2 = glm::vec3(0.f);
+
+        EXPECT_TRUE(VectorsAreEqual(vec1, vec2));
+    }
+
+    TEST(Vector3, One)
+    {
+        Vector3 vec1 = Vector3::One;
+        glm::vec3 vec2 = glm::vec3(1.f);
+
+        EXPECT_TRUE(VectorsAreEqual(vec1, vec2));
+    }
+
+    TEST(Vector3, xAxis)
+    {
+        Vector3 vec1 = Vector3::XAxis;
+        glm::vec3 vec2 = glm::vec3(1.0f, 0.0f, 0.0f);
+
+        EXPECT_TRUE(VectorsAreEqual(vec1, vec2));
+    }
+
+    TEST(Vector3, yAxis)
+    {
+        Vector3 vec1 = Vector3::YAxis;
+        glm::vec3 vec2 = glm::vec3(0.0f, 1.0f, 0.0f);
+
+        EXPECT_TRUE(VectorsAreEqual(vec1, vec2));
+    }
+
+    TEST(Vector3, zAxis)
+    {
+        Vector3 vec1 = Vector3::ZAxis;
+        glm::vec3 vec2 = glm::vec3(0.0f, 0.0f, 1.0f);
+
+        EXPECT_TRUE(VectorsAreEqual(vec1, vec2));
     }
 }
