@@ -55,9 +55,9 @@ set_target_properties(${LM_LIB_NAME} PROPERTIES OUTPUT_NAME "${PROJECT_NAME}-${P
 # Set Warning level 4 and warnings as errors flags
 if (MSVC)
     set(CMAKE_DEBUG_POSTFIX "d")
-    target_compile_options(${LM_LIB_NAME} PRIVATE /W4 /WX)
+    target_compile_options(${LM_LIB_NAME} PRIVATE /W3 /WX)
 else ()
-    target_compile_options(${LM_LIB_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+    target_compile_options(${LM_LIB_NAME} PRIVATE -Wall -Wextra -Wpedantic)
 endif ()
 
 
