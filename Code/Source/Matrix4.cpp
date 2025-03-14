@@ -73,8 +73,7 @@ namespace Maths
 		return l_mat;
 	}
 
-	Matrix4 Matrix4::TRS(const Maths::Vector3& a_translation, const Maths::Vector3& a_rotation,
-	                     const Maths::Vector3& a_scale)
+	Matrix4 Matrix4::TRS(const Maths::Vector3& a_translation, const Maths::Vector3& a_rotation, const Maths::Vector3& a_scale)
 	{
 		Matrix4 l_mat = Translation(a_translation) *
 		                RotationZ(a_rotation.z) *
