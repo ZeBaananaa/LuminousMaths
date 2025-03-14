@@ -1,10 +1,8 @@
 ﻿#pragma once
 
-#include "MathsExport.hpp"
-
 namespace Maths
 {
-	class LUMINOUS_MATHS_API Vector2
+	class Vector2
 	{
 	public:
 		float x{0.0f}, y{0.0f};
