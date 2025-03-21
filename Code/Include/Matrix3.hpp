@@ -24,12 +24,12 @@ namespace Maths
 			};
 		}
 
-		explicit Matrix3(const std::array<std::array<float, 3>, 3>& a_mat)
+		Matrix3(const std::array<std::array<float, 3>, 3>& a_mat)
 		{
 			mat = a_mat;
 		};
 
-		explicit Matrix3(const Vector3& a_v1, const Vector3& a_v2, const Vector3& a_v3)
+		Matrix3(const Vector3& a_v1, const Vector3& a_v2, const Vector3& a_v3)
 		{
 			mat = {
 				a_v1.x, a_v1.y, a_v1.z,

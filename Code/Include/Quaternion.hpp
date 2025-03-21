@@ -12,7 +12,7 @@ namespace Maths
         explicit Quaternion() = default;
         ~Quaternion() = default;
 
-        explicit Quaternion(const float& a_x, const float& a_y, const float& a_z, const float& a_w);
+        Quaternion(const float& a_x, const float& a_y, const float& a_z, const float& a_w);
         explicit Quaternion(const Vector3& a_v);
 
         [[nodiscard]] Quaternion Add(const Quaternion& a_q) const;

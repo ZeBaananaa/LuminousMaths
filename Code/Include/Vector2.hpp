@@ -8,7 +8,7 @@ namespace Maths
 		float x{0.0f}, y{0.0f};
 
 		explicit Vector2() = default;
-		explicit Vector2(const float& a_a, const float& a_b);
+		Vector2(const float& a_a, const float& a_b);
 		explicit Vector2(const float& a_a);
 
 		[[nodiscard]] Vector2 Add(const Vector2& a_v) const;

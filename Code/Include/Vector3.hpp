@@ -8,7 +8,7 @@ namespace Maths
 		float x{0.0f}, y{0.0f}, z{0.0f};
 
 		explicit Vector3() = default;
-		explicit Vector3(const float& a_a, const float& a_b, const float& a_c);
+		Vector3(const float& a_a, const float& a_b, const float& a_c);
 		explicit Vector3(const float& a_a);
 
 		Vector3 Add(const Vector3& a_v) const;
