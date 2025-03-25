@@ -84,6 +84,28 @@ namespace Maths
 		return l_mat;
 	}
 
+	Matrix4 Matrix4::LookAt(const Vector3& a_eye, const Vector3& a_center, const Vector3& a_up)
+	{
+		Vector3 l_fn = Vector3(a_center - a_eye).Normalize();
+		Vector3 l_un = a_up.Normalize();
+		Vector3 l_s = l_fn.CrossProduct(l_un).Normalize();
+		Vector3 l_u = l_s.CrossProduct(l_fn);
+
+		float l_seye = l_s.DotProduct(a_eye);
+		float l_ueye = l_u.DotProduct(a_eye);
+		float l_feye = l_fn.DotProduct(a_eye);
+
+		Matrix4 l_look = Matrix4
+			({
+				{ l_s.x,l_s.y,l_s.z,-l_seye },
+				{ l_u.x,l_u.y,l_u.z,-l_ueye },
+				{ -l_fn.x,-l_fn.y,-l_fn.z,l_feye },
+				{ 0.0f,0.0f,0.0f,1.0f },
+			}
+			);
+		return l_look;
+	}
+
 	Matrix4::Matrix4(const float& a_a)
 	{
 		for (int i = 0; i < 4; ++i)

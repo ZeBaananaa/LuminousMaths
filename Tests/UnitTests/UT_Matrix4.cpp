@@ -17,6 +17,18 @@ namespace Maths
                     return false;
         return true;
     }
+    void PrintGLM(const glm::mat4& a_mat)
+    {
+        for (int i = 0; i < 4; ++i)
+        {
+            for (int j = 0; j < 4; ++j)
+            {
+                std::cout << a_mat[i][j] << ", ";
+            }
+            std::cout << '\n';
+        }
+    }
+    
 
     float trace(glm::mat4& mat)
     {
@@ -164,5 +176,23 @@ namespace Maths
             glmMat[i][i] = i + 1;
         float glmResult = trace(glmMat);
         EXPECT_FLOAT_EQ(result, glmResult);
+    }
+
+    TEST(Matrix4, LookAt)
+    {
+        glm::vec3 eyeG = { 5.0f,4.0f,2.0f };
+        glm::vec3 centerG = { 64.0f,12.2f,7.4f };
+        glm::vec3 upG = { 0.0f,0.0f,1.0f };
+        glm::mat4 lookG = glm::lookAt(eyeG, centerG, upG);
+
+        PrintGLM(lookG);
+
+        Vector3 eyeM = Vector3(5.0f, 4.0f, 2.0f);
+        Vector3 centerM = Vector3(64.0f, 12.2f, 7.4f);
+        Vector3 upM = Vector3(0.0f, 0.0f, 1.0f);
+        Matrix4 lookM = Matrix4::LookAt(eyeM, centerM, upM);
+        lookM.Transpose().Print();
+
+        EXPECT_TRUE(MatricesAreEqual(lookM.Transpose(), lookG));
     }
 }

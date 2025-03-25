@@ -67,6 +67,8 @@ namespace Maths
 
 		static Matrix4 TRS(const Vector3& a_translation, const Vector3& a_rotation, const Vector3& a_scale);
 
+		static Matrix4 LookAt(const Vector3& a_eye, const Vector3& a_center, const Vector3& a_up);
+
 		static Matrix4 zero;
 		static Matrix4 identity;
 
