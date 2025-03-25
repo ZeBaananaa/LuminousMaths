@@ -2,7 +2,23 @@
   "version": 3,
   "configurePresets": [
     {
-      "name": "VS_2022",
+      "name": "VS_2022_Debug",
+      "displayName": "Visual Studio 2022",
+      "description": "MSVC Compiler",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "binaryDir": "${sourceDir}/TEMP/${presetName}",
+      "cacheVariables": {
+        "L_MATHS_UNITTEST": true
+      }
+    },
+    {
+      "name": "VS_2022_Release",
       "displayName": "Visual Studio 2022",
       "description": "MSVC Compiler",
       "generator": "Visual Studio 17 2022",
@@ -75,7 +91,7 @@
     {
       "name": "VS_2022 Debug",
       "description": "Visual Studio multi-config Debug preset",
-      "configurePreset": "VS_2022",
+      "configurePreset": "VS_2022_Debug",
       "configuration": "Debug",
       "verbose": true,
       "jobs": 8
@@ -83,7 +99,7 @@
     {
       "name": "VS_2022 Release",
       "description": "Visual Studio multi-config Release preset",
-      "configurePreset": "VS_2022",
+      "configurePreset": "VS_2022_Release",
       "configuration": "Release",
       "verbose": true,
       "jobs": 8
@@ -122,7 +138,7 @@
     {
       "name": "VS_2022 Debug",
       "description": "Visual Studio multi-config Debug preset",
-      "configurePreset": "VS_2022",
+      "configurePreset": "VS_2022_Debug",
       "configuration": "Debug",
       "output": {
         "verbosity": "verbose"
@@ -131,7 +147,7 @@
     {
       "name": "VS_2022 Release",
       "description": "Visual Studio multi-config Release preset",
-      "configurePreset": "VS_2022",
+      "configurePreset": "VS_2022_Release",
       "configuration": "Release",
       "output": {
         "verbosity": "verbose"
