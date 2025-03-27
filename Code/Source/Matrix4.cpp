@@ -73,6 +73,37 @@ namespace Maths
 		return l_mat;
 	}
 
+	Matrix4 Matrix4::RotationAxisAngle(const float& a_angle, const Vector3& a_axis)
+	{
+		float l_radAngle = DegToRad(a_angle);
+
+		float l_c = cos(l_radAngle);
+		float l_s = sin(l_radAngle);
+		Vector3 l_normAxis = a_axis.Normalize();
+		float l_t = 1.0f - l_c;
+
+
+		Matrix4 l_mat = identity;
+		l_mat.mat[0][0] = l_c + l_normAxis.x * l_normAxis.x * l_t;
+		l_mat.mat[1][1] = l_c + l_normAxis.y * l_normAxis.y * l_t;
+		l_mat.mat[2][2] = l_c + l_normAxis.z * l_normAxis.z * l_t;
+
+		float l_tmp1 = l_normAxis.x * l_normAxis.y * l_t;
+		float l_tmp2 = l_normAxis.z * l_s;
+		l_mat.mat[1][0] = l_tmp1 + l_tmp2;
+		l_mat.mat[0][1] = l_tmp1 - l_tmp2;
+		l_tmp1 = l_normAxis.x * l_normAxis.z * l_t;
+		l_tmp2 = l_normAxis.y * l_s;
+		l_mat.mat[2][0] = l_tmp1 - l_tmp2;
+		l_mat.mat[0][2] = l_tmp1 + l_tmp2;
+		l_tmp1 = l_normAxis.y * l_normAxis.z * l_t;
+		l_tmp2 = l_normAxis.x * l_s;
+		l_mat.mat[2][1] = l_tmp1 + l_tmp2;
+		l_mat.mat[1][2] = l_tmp1 - l_tmp2;
+
+		return l_mat.Transpose();
+	}
+
 	Matrix4 Matrix4::TRS(const Maths::Vector3& a_translation, const Maths::Vector3& a_rotation, const Maths::Vector3& a_scale)
 	{
 		Matrix4 l_mat = Translation(a_translation) *

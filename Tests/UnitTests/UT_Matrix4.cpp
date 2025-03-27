@@ -193,6 +193,24 @@ namespace Maths
         EXPECT_TRUE(MatricesAreEqual(lookM.Transpose(), lookG));
     }
 
+    TEST(Matrix4, Rotations)
+    {
+        glm::mat4 baseMat = glm::mat4(1.0f);
+        glm::mat4 matRot = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 1.0f));
+
+        PrintGLM(matRot);
+
+        Matrix4 matRotM = Matrix4::RotationZ(90.0f);
+        Matrix4 matRotMY = Matrix4::RotationY(90.0f);
+        
+        Matrix4 rotatedB = Matrix4::Rotation(90.0f, Vector3(1.0f, 0.0f, 1.0f));
+        Matrix4 rotatedM = Matrix4::identity * rotatedB;
+        rotatedM.Print();
+        
+
+        EXPECT_TRUE(MatricesAreEqual(rotatedM, matRot));
+    }
+
     TEST(Matrix4, Perspective)
     {
         
