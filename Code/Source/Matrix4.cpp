@@ -104,6 +104,11 @@ namespace Maths
 		return l_mat.Transpose();
 	}
 
+	Matrix4 Matrix4::Rotate(const Matrix4& a_mat, const float& a_angle, const Vector3& a_axis)
+	{
+		return a_mat * RotationAxisAngle(a_angle, a_axis);
+	}
+
 	Matrix4 Matrix4::TRS(const Maths::Vector3& a_translation, const Maths::Vector3& a_rotation, const Maths::Vector3& a_scale)
 	{
 		Matrix4 l_mat = Translation(a_translation) *
