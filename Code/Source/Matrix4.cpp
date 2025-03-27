@@ -106,6 +106,24 @@ namespace Maths
 		return l_look;
 	}
 
+
+	Matrix4 Matrix4::Perspective(const float& a_fovY, const float& a_aspect, const float& a_zNear, const float& a_zFar)
+	{
+		float l_fovRad = Maths::DegToRad(a_fovY);
+		float tanHalfFovy = tanf(a_fovY / 2.0f);
+
+		Matrix4 perspective = Matrix4
+		({
+			{1.0f/(a_aspect*tanHalfFovy), 0.f, 0.f, 0.f},
+			{0.f, 1.0f/(tanHalfFovy), 0.f, 0.f},
+			{0.f, 0.f, -(a_zFar + a_zNear) / (a_zFar - a_zNear), -1.f},
+			{0.f, 0.f, -(2.f * a_zFar * a_zNear) / (a_zFar - a_zNear),0.f}
+		});
+
+		return perspective;
+
+	}
+
 	Matrix4::Matrix4(const float& a_a)
 	{
 		for (int i = 0; i < 4; ++i)

@@ -69,6 +69,8 @@ namespace Maths
 
 		static Matrix4 LookAt(const Vector3& a_eye, const Vector3& a_center, const Vector3& a_up);
 
+		static Matrix4 Perspective(const float& a_fovY, const float& a_aspect, const float& a_zNear, const float& a_zFar);
+
 		static Matrix4 zero;
 		static Matrix4 identity;
 
