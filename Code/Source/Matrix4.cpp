@@ -121,9 +121,7 @@ namespace Maths
 	Matrix4 Matrix4::TRS(const Maths::Vector3& a_translation, const Maths::Vector3& a_rotation, const Maths::Vector3& a_scale)
 	{
 		Matrix4 l_mat = Translation(a_translation) *
-		                RotationZ(a_rotation.z) *
-		                RotationY(a_rotation.y) *
-		                RotationX(a_rotation.x) *
+		                RotationXYZ(a_rotation) *
 		                Scale(a_scale);
 		l_mat.RoundTiny();
 		return l_mat;
@@ -131,9 +129,9 @@ namespace Maths
 
 	Matrix4 Matrix4::TRS(const Maths::Matrix4& a_translation, const Maths::Matrix4& a_rotation, const Maths::Matrix4& a_scale)
 	{
-		Matrix4 l_mat = a_translation *
+		Matrix4 l_mat = a_scale *
 			a_rotation *
-			a_scale;
+			a_translation;
 		l_mat.RoundTiny();
 		return l_mat;
 	}

@@ -5,6 +5,7 @@
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/string_cast.hpp"
 
+//#define GLM_FORCE_ROWS
 #include <glm/glm.hpp>
 
 namespace Maths
@@ -214,11 +215,43 @@ namespace Maths
 
     TEST(Matrix4, TRS)
     {
-        Matrix4::Translation(Vector3(4.0f, 3.0f, 8.0f)).Print();
-        Matrix4::RotationXYZ(Vector3(90.0f, 15.0f, 0.0f)).Transpose().Print();
-        Matrix4::Scale(Vector3(2.0f, 4.0f, 3.0f)).Print();
-        Matrix4 trsM = Matrix4::TRS(Vector3(4.0f, 3.0f, 8.0f), Vector3(90.0f, 15.0f, 0.0f), Vector3(2.0f, 3.0f, 4.0f));
-        trsM.Print();
+        Matrix4 tm = Matrix4::Translation(Vector3(4.0f, 3.0f, 8.0f));
+        //tm.Print();
+        Matrix4 tr = Matrix4::RotationXYZ(Vector3(90.0f, 15.0f, 0.0f));
+        Matrix4 ts = Matrix4::Scale(Vector3(2.0f, 4.0f, 3.0f));
+        //ts.Print();
+
+        glm::mat4 t =
+        {
+            1,0,0,4,
+            0,1,0,3,
+            0,0,1,8,
+            0,0,0,1
+        };
+
+        glm::mat4 r =
+        {
+            0.965926f,0,-0.258819f,0,
+            0.258819f,0,0.965926f,0,
+            0,-1,0,0,
+            0,0,0,1
+        };
+
+        glm::mat4 s =
+        {
+            2,0,0,0,
+            0,4,0,0,
+            0,0,3,0,
+            0,0,0,1
+        };
+
+
+        PrintGLM(t * r * s);
+
+        Matrix4 mt = ts * tr * tm;
+        mt.Print();
+        //Matrix4 trsM = Matrix4::TRS(Vector3(4.0f, 3.0f, 8.0f), Vector3(90.0f, 15.0f, 0.0f), Vector3(2.0f, 3.0f, 4.0f));
+        //trsM.Print();
 
     }
 
