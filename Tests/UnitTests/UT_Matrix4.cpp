@@ -212,4 +212,14 @@ namespace Maths
         EXPECT_TRUE(MatricesAreEqual(perspM, perspG));
     }
 
+    TEST(Matrix4, TRS)
+    {
+        Matrix4::Translation(Vector3(4.0f, 3.0f, 8.0f)).Print();
+        Matrix4::RotationXYZ(Vector3(90.0f, 15.0f, 0.0f)).Transpose().Print();
+        Matrix4::Scale(Vector3(2.0f, 4.0f, 3.0f)).Print();
+        Matrix4 trsM = Matrix4::TRS(Vector3(4.0f, 3.0f, 8.0f), Vector3(90.0f, 15.0f, 0.0f), Vector3(2.0f, 3.0f, 4.0f));
+        trsM.Print();
+
+    }
+
 }

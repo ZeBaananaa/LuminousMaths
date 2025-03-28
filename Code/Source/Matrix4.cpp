@@ -73,6 +73,15 @@ namespace Maths
 		return l_mat;
 	}
 
+	Matrix4 Matrix4::RotationXYZ(const Vector3& a_axisAngle)
+	{
+		Matrix4 l_finalRot = RotationX(a_axisAngle.x) *
+			RotationY(a_axisAngle.y) *
+			RotationZ(a_axisAngle.z);
+		l_finalRot.RoundTiny();
+		return l_finalRot;
+	}
+
 	Matrix4 Matrix4::RotationAxisAngle(const float& a_angle, const Vector3& a_axis)
 	{
 		float l_radAngle = DegToRad(a_angle);
@@ -116,6 +125,15 @@ namespace Maths
 		                RotationY(a_rotation.y) *
 		                RotationX(a_rotation.x) *
 		                Scale(a_scale);
+		l_mat.RoundTiny();
+		return l_mat;
+	}
+
+	Matrix4 Matrix4::TRS(const Maths::Matrix4& a_translation, const Maths::Matrix4& a_rotation, const Maths::Matrix4& a_scale)
+	{
+		Matrix4 l_mat = a_translation *
+			a_rotation *
+			a_scale;
 		l_mat.RoundTiny();
 		return l_mat;
 	}
