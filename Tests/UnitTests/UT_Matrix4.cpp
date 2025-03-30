@@ -159,7 +159,7 @@ namespace Maths
 
     TEST(Matrix4, Transpose)
     {
-        Matrix4 mat4({ {{1.0f, 2.0f, 3.0f, 4.0f}, {5.0f, 6.0f, 7.0f, 8.0f}, {9.0f, 10.0f, 11.0f, 12.0f}, {13.0f, 14.0f, 15.0f, 16.0f}} });
+        Matrix4 mat4 = Matrix4({ {1.0f, 2.0f, 3.0f, 4.0f}, {5.0f, 6.0f, 7.0f, 8.0f}, {9.0f, 10.0f, 11.0f, 12.0f}, {13.0f, 14.0f, 15.0f, 16.0f}} );
         Matrix4 result = mat4.Transpose();
         glm::mat4 glmMat4(1.0f);
         for (int i = 0; i < 4; ++i)
@@ -170,7 +170,7 @@ namespace Maths
 
     TEST(Matrix4, Trace)
     {
-        Matrix4 mat4({{{1.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 4.0f}}});
+        Matrix4 mat4({{1.0f, 0.0f, 0.0f, 0.0f}, {0.0f, 2.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f, 4.0f}});
         float result = mat4.Trace();
         glm::mat4 glmMat(1.0f);
         for (int i = 0; i < 4; ++i)
@@ -246,10 +246,14 @@ namespace Maths
         };
 
 
-        PrintGLM(t * r * s);
+        PrintGLM(s * r * t);
 
-        Matrix4 mt = ts * tr * tm;
+        Matrix4 mt = tm * tr * ts;
         mt.Print();
+
+        Matrix4 trsM = Matrix4::TRS(tm, tr, ts);
+        trsM.Print();
+
         //Matrix4 trsM = Matrix4::TRS(Vector3(4.0f, 3.0f, 8.0f), Vector3(90.0f, 15.0f, 0.0f), Vector3(2.0f, 3.0f, 4.0f));
         //trsM.Print();
 
