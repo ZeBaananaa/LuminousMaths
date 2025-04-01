@@ -11,7 +11,7 @@ project(LuminousMaths
         LANGUAGES CXX)
 
 # Define output build folder
-set(LM_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/Builds/${CMAKE_CXX_COMPILER_ID}_${CMAKE_BUILD_TYPE}")
+set(LM_OUTPUT_DIR "${CMAKE_SOURCE_DIR}/Builds/${CMAKE_CXX_COMPILER_ID}_$<CONFIG>")
 
 # Define Output Build path for libraries & executable
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${LM_OUTPUT_DIR}/libs")
