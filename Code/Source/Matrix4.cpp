@@ -153,7 +153,7 @@ namespace Maths
 				{ 0.0f,0.0f,0.0f,1.0f },
 			}
 			);
-		return l_look;
+		return l_look.Transpose();
 	}
 
 

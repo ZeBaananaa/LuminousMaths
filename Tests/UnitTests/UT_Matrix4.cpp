@@ -259,4 +259,12 @@ namespace Maths
 
     }
 
+    TEST(Matrix4, ENGINETEST)
+    {
+        glm::mat4 matG = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+        Matrix4 matL = Maths::Matrix4::LookAt(Maths::Vector3(2.0f, 2.0f, 2.0f), Maths::Vector3(0.0f, 0.0f, 0.0f), Maths::Vector3(0.0f, 0.0f, 1.0f));
+
+
+    }
+
 }
