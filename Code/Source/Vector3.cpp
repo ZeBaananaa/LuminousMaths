@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "Utils.hpp"
+#include "MathUtils.hpp"
 
 namespace Maths
 {

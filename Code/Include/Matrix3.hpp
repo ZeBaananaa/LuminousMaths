@@ -3,7 +3,7 @@
 #include <array>
 #include <iostream>
 
-#include "Utils.hpp"
+#include "MathUtils.hpp"
 #include "Vector3.hpp"
 
 namespace Maths

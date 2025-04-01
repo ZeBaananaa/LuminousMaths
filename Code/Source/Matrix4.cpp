@@ -2,7 +2,7 @@
 
 #include <cmath>
 
-#include "Utils.hpp"
+#include "MathUtils.hpp"
 
 #include "Vector3.hpp"
 

@@ -1,11 +1,11 @@
-#include "glm/glm.hpp"
+#include "MathUtils.hpp"
 #include "Quaternion.hpp"
 #include "Vector3.hpp"
-#include "Utils.hpp"
+#include "glm/glm.hpp"
 
 #define GLM_ENABLE_EXPERIMENTAL
-#include "gtest/gtest.h"
 #include "glm/gtx/string_cast.hpp"
+#include "gtest/gtest.h"
 
 namespace Maths
 {

@@ -1,4 +1,4 @@
-#include "Utils.hpp"
+#include "MathUtils.hpp"
 #include <cmath>
 
 namespace Maths
@@ -17,12 +17,12 @@ namespace Maths
 
     float DegToRad(const float& a_deg)
     {
-        return a_deg * (m_PI / 180.0f);
+        return a_deg * (PI / 180.0f);
     }
 
     float RadToDeg(const float& a_rad)
     {
-        return a_rad * (180.0f / m_PI);
+        return a_rad * (180.0f / PI);
     }
 
     float Precise(const float& a_f)
