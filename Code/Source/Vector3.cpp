@@ -63,7 +63,7 @@ namespace Maths
 
 	float Vector3::Length() const
 	{
-		return Maths::Sqrt((x * x) + (y * y) + (z * z));
+		return Sqrt((x * x) + (y * y) + (z * z));
 	}
 
 	Vector3 Vector3::Normalize() const
@@ -80,6 +80,13 @@ namespace Maths
 	{
 		return (Vector3((y * a_v.z) - (z * a_v.y), (z * a_v.x) - (x * a_v.z), (x * a_v.y) - (y * a_v.x)));
 	}
+
+
+	Vector3 Vector3::CrossProduct(const Vector3& a_v1, const Vector3& a_v2)
+	{
+		return (Vector3((a_v1.y * a_v2.z) - (a_v1.z * a_v2.y), (a_v1.z * a_v2.x) - (a_v1.x * a_v2.z), (a_v1.x * a_v2.y) - (a_v1.y * a_v2.x)));
+	}
+
 
 	void Vector3::Print() const
 	{

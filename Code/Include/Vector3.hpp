@@ -21,6 +21,8 @@ namespace Maths
 		Vector3 Normalize() const;
 		Vector3 CrossProduct(const Vector3& a_v) const;
 
+		static Vector3 CrossProduct(const Vector3& a_v1, const Vector3& a_v2);
+
 		float Length() const;
 		float DotProduct(const Vector3& a_v) const;
 
