@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include "MathUtils.hpp"
+#include "Quaternion.hpp"
+
 
 namespace Maths
 {
@@ -122,6 +124,24 @@ namespace Maths
 	{
 		return Product(a_v);
 	}
+
+
+	Vector3 Vector3::operator*(const Quaternion& a_q) const
+	{
+		Vector3 l_currentVec { x, y, z };
+
+		const Vector3 l_qVec { a_q.x, a_q.y, a_q.z };
+		const float l_scalar { a_q.w };
+		const float l_dotProduct { DotProduct(l_qVec) };
+		const Vector3 l_crossProduct { CrossProduct(l_qVec) };
+		const float l_qVecDotProduct { l_qVec.DotProduct(l_qVec) };
+
+		float step1 = 2.0f * l_dotProduct;
+
+		Vector3 l_output { l_qVec * (2.0f * l_dotProduct) + l_currentVec * (l_scalar * l_scalar - l_qVecDotProduct) + (2.0f * l_scalar) };
+		return l_output * l_crossProduct;
+	}
+
 
 	Vector3 Vector3::operator/(const float& a_a) const
 	{

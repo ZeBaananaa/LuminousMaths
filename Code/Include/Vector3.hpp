@@ -1,7 +1,11 @@
 ﻿#pragma once
 
+
 namespace Maths
 {
+	class Quaternion;
+
+
 	class Vector3
 	{
 	public:
@@ -40,6 +44,7 @@ namespace Maths
 		Vector3 operator-(const Vector3& a_v) const;
 		Vector3 operator*(const float& a_a) const;
 		Vector3 operator*(const Vector3& a_v) const;
+		Vector3 operator*(const Quaternion& a_q) const;
 		Vector3 operator/(const float& a_a) const;
 		Vector3 operator/(const Vector3& a_v) const;
 

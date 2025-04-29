@@ -191,7 +191,7 @@ namespace Maths
         Vector3 upM = Vector3(0.0f, 0.0f, 1.0f);
         Matrix4 lookM = Matrix4::LookAt(eyeM, centerM, upM);
 
-        EXPECT_TRUE(MatricesAreEqual(lookM.Transpose(), lookG));
+        EXPECT_TRUE(MatricesAreEqual(lookM, lookG));
     }
 
     TEST(Matrix4, Rotations)
