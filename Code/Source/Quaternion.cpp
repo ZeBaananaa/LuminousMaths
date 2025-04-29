@@ -149,6 +149,17 @@ namespace Maths
 		return Quaternion(Precise(q5.x), Precise(q5.y), Precise(q5.z), Precise(q5.w));
 	}
 
+
+	Quaternion Quaternion::AngleAxis(const float& a_angle, const Vector3& a_axis)
+	{
+		const float l_halfAngle = a_angle * 0.5f;
+		const float l_sin = sin(l_halfAngle);
+		const Vector3 l_axisNormalized = a_axis.Normalize();
+
+		return Quaternion { cos(l_halfAngle), l_axisNormalized.x * l_sin, l_axisNormalized.y * l_sin, l_axisNormalized.z * l_sin };
+	}
+
+
 	Quaternion Quaternion::operator+(const Quaternion& a_q) const
 	{
 		return Add(a_q);

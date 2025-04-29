@@ -29,6 +29,7 @@ namespace Maths
 
         static Quaternion FromEulerAngles(const Vector3& a_v);
         static Quaternion Slerp(const Quaternion& a_q1, const Quaternion& a_q2, float a_t);
+        static Quaternion AngleAxis(const float& a_angle, const Vector3& a_axis);
         static Quaternion Identity;
         static Quaternion Zero;
         static Quaternion One;
