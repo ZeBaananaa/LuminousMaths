@@ -159,18 +159,15 @@ namespace Maths
 
 	Matrix4 Matrix4::Perspective(const float& a_fovY, const float& a_aspect, const float& a_zNear, const float& a_zFar)
 	{
-		float tanHalfFovy = tanf(a_fovY / 2.0f);
+		const float fovRad = DegToRad(a_fovY);
+		const float tanHalfFov = tanf(fovRad / 2.0f);
 
-		Matrix4 perspective = Matrix4
-		({
-			{1.0f/(a_aspect*tanHalfFovy), 0.f, 0.f, 0.f},
-			{0.f, -1.0f/(tanHalfFovy), 0.f, 0.f},
-			{0.f, 0.f, -(a_zFar + a_zNear) / (a_zFar - a_zNear), -1.f},
-			{0.f, 0.f, -(2.f * a_zFar * a_zNear) / (a_zFar - a_zNear),0.f}
+		return Matrix4({
+			{ 1.0f / (a_aspect * tanHalfFov), 0.0f, 0.0f, 0.0f },
+			{ 0.0f, -1.0f / tanHalfFov, 0.0f, 0.0f }, // Invert Y Axis for vulkan
+			{ 0.0f, 0.0f, a_zFar / (a_zNear - a_zFar), -1.0f },
+			{ 0.0f, 0.0f, (a_zFar * a_zNear) / (a_zNear - a_zFar), 0.0f }
 		});
-
-		return perspective;
-
 	}
 
 	Matrix4::Matrix4(const float& a_a)
