@@ -110,7 +110,7 @@ namespace Maths
 		l_mat.mat[2][1] = l_tmp1 + l_tmp2;
 		l_mat.mat[1][2] = l_tmp1 - l_tmp2;
 
-		return l_mat.Transpose();
+		return l_mat;
 	}
 
 	Matrix4 Matrix4::Rotate(const Matrix4& a_mat, const float& a_angle, const Vector3& a_axis)
@@ -153,7 +153,7 @@ namespace Maths
 				{ 0.0f,0.0f,0.0f,1.0f },
 			}
 			);
-		return l_look.Transpose();
+		return l_look;
 	}
 
 
@@ -164,7 +164,7 @@ namespace Maths
 
 		return Matrix4({
 			{ 1.0f / (a_aspect * tanHalfFov), 0.0f, 0.0f, 0.0f },
-			{ 0.0f, -1.0f / tanHalfFov, 0.0f, 0.0f }, // Invert Y Axis for vulkan
+			{ 0.0f, 1.0f / tanHalfFov, 0.0f, 0.0f },
 			{ 0.0f, 0.0f, a_zFar / (a_zNear - a_zFar), -1.0f },
 			{ 0.0f, 0.0f, (a_zFar * a_zNear) / (a_zNear - a_zFar), 0.0f }
 		});
