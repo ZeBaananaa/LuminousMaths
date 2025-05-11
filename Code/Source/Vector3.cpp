@@ -136,8 +136,6 @@ namespace Maths
 		const Vector3 l_crossProduct { CrossProduct(l_qVec) };
 		const float l_qVecDotProduct { l_qVec.DotProduct(l_qVec) };
 
-		float step1 = 2.0f * l_dotProduct;
-
 		Vector3 l_output { l_qVec * (2.0f * l_dotProduct) + l_currentVec * (l_scalar * l_scalar - l_qVecDotProduct) + (2.0f * l_scalar) };
 		return l_output * l_crossProduct;
 	}
