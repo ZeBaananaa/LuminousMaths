@@ -27,6 +27,17 @@ namespace Maths
 
 		explicit Matrix4(const std::array<std::array<float, 4>, 4>& a_mat);
 
+		inline Vector3 GetTranslation() const { return Vector3 {mat[3][0], mat[3][1], mat[3][2] }; }
+
+		inline Vector3 GetScale() const
+		{
+			float l_scaleX = Maths::Vector3{ mat[0][0], mat[0][1], mat[0][2] }.Length();
+			float l_scaleY = Maths::Vector3{ mat[1][0], mat[1][1], mat[1][2] }.Length();
+			float l_scaleZ = Maths::Vector3{ mat[2][0], mat[2][1], mat[2][2] }.Length();
+
+			return { l_scaleX, l_scaleY, l_scaleZ };
+		}
+
 		Matrix4 Add(const float& a_a) const;
 
 		Matrix4 Add(const Matrix4& a_m) const;
