@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "MathUtils.hpp"
+#include "Matrix4.hpp"
 #include "Vector3.hpp"
 
 namespace Maths
@@ -97,6 +98,48 @@ namespace Maths
 	void Quaternion::Print() const
 	{
 		std::cout << w << ", " << x << ", " << y << ", " << z << '\n';
+	}
+
+	Quaternion Quaternion::FromMatrix(const Matrix4& a_mat)
+	{
+		float l_trace = a_mat.mat[0][0] + a_mat.mat[1][1] + a_mat.mat[2][2];
+
+		float l_scalar;
+		Quaternion l_quat;
+
+		if (l_trace > 0.0f)
+			{
+			l_scalar = 0.5f / std::sqrt(l_trace + 1.0f);
+			l_quat.w = 0.25f / l_scalar;
+			l_quat.x = (a_mat.mat[2][1] - a_mat.mat[1][2]) * l_scalar;
+			l_quat.y = (a_mat.mat[0][2] - a_mat.mat[2][0]) * l_scalar;
+			l_quat.z = (a_mat.mat[1][0] - a_mat.mat[0][1]) * l_scalar;
+		} else
+			{
+			if (a_mat.mat[0][0] > a_mat.mat[1][1] && a_mat.mat[0][0] > a_mat.mat[2][2]) {
+				l_scalar = 2.0f * std::sqrt(1.0f + a_mat.mat[0][0] - a_mat.mat[1][1] - a_mat.mat[2][2]);
+				l_quat.w = (a_mat.mat[2][1] - a_mat.mat[1][2]) / l_scalar;
+				l_quat.x = 0.25f * l_scalar;
+				l_quat.y = (a_mat.mat[0][1] + a_mat.mat[1][0]) / l_scalar;
+				l_quat.z = (a_mat.mat[0][2] + a_mat.mat[2][0]) / l_scalar;
+			} else if (a_mat.mat[1][1] > a_mat.mat[2][2])
+				{
+				l_scalar = 2.0f * std::sqrt(1.0f + a_mat.mat[1][1] - a_mat.mat[0][0] - a_mat.mat[2][2]);
+				l_quat.w = (a_mat.mat[0][2] - a_mat.mat[2][0]) / l_scalar;
+				l_quat.x = (a_mat.mat[0][1] + a_mat.mat[1][0]) / l_scalar;
+				l_quat.y = 0.25f * l_scalar;
+				l_quat.z = (a_mat.mat[1][2] + a_mat.mat[2][1]) / l_scalar;
+			} else
+				{
+				l_scalar = 2.0f * std::sqrt(1.0f + a_mat.mat[2][2] - a_mat.mat[0][0] - a_mat.mat[1][1]);
+				l_quat.w = (a_mat.mat[1][0] - a_mat.mat[0][1]) / l_scalar;
+				l_quat.x = (a_mat.mat[0][2] + a_mat.mat[2][0]) / l_scalar;
+				l_quat.y = (a_mat.mat[1][2] + a_mat.mat[2][1]) / l_scalar;
+				l_quat.z = 0.25f * l_scalar;
+			}
+		}
+
+		return l_quat;
 	}
 
 	Quaternion Quaternion::FromEulerAngles(const Vector3& a_v)

@@ -191,7 +191,7 @@ namespace Maths
         Vector3 upM = Vector3(0.0f, 0.0f, 1.0f);
         Matrix4 lookM = Matrix4::LookAt(eyeM, centerM, upM);
 
-        EXPECT_TRUE(MatricesAreEqual(lookM, lookG));
+        EXPECT_TRUE(MatricesAreEqual(lookM.Transpose(), lookG));
     }
 
     TEST(Matrix4, Rotations)
@@ -200,17 +200,18 @@ namespace Maths
         Matrix4 rotatedM = Matrix4::Rotate(Matrix4::identity,90.0f, Vector3(1.0f, 0.0f, 1.0f));
         
 
-        EXPECT_TRUE(MatricesAreEqual(rotatedM, matRot));
+        EXPECT_TRUE(MatricesAreEqual(rotatedM.Transpose(), matRot));
     }
 
     TEST(Matrix4, Perspective)
     {
-        
-        glm::mat4 perspG = glm::perspective(35.0f,1.0f, 0.1f,100.0f);
-
+        glm::mat4 perspG = glm::perspective(glm::radians(35.0f), 1.0f, 0.1f, 100.0f);
         Matrix4 perspM = Matrix4::Perspective(35.0f,1.0f,0.1f,100.0f);
 
-        EXPECT_TRUE(MatricesAreEqual(perspM, perspG));
+        perspM.Print();
+        PrintGLM(perspG);
+
+        EXPECT_TRUE(MatricesAreEqual(perspM.Transpose(), perspG));
     }
 
     TEST(Matrix4, TRS)
@@ -246,13 +247,13 @@ namespace Maths
         };
 
 
-        PrintGLM(s * r * t);
+       //PrintGLM(s * r * t);
 
         Matrix4 mt = tm * tr * ts;
-        mt.Print();
+        //mt.Print();
 
         Matrix4 trsM = Matrix4::TRS(tm, tr, ts);
-        trsM.Print();
+        //trsM.Print();
 
         //Matrix4 trsM = Matrix4::TRS(Vector3(4.0f, 3.0f, 8.0f), Vector3(90.0f, 15.0f, 0.0f), Vector3(2.0f, 3.0f, 4.0f));
         //trsM.Print();

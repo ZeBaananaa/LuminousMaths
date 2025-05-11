@@ -8,6 +8,8 @@
 
 #include <iostream>
 
+#include "Quaternion.hpp"
+
 namespace Maths
 {
 	Matrix4 Matrix4::zero = Matrix4(0.0f);
@@ -327,8 +329,7 @@ namespace Maths
 
 	Matrix4 Matrix4::Opposite() const
 	{
-		Matrix4 l_m = Matrix4(mat);
-		return l_m * -1;
+		return Matrix4(mat) * -1;
 	}
 
 	Matrix4 Matrix4::Transpose() const
@@ -346,8 +347,34 @@ namespace Maths
 
 	bool Matrix4::IsOrthogonal() const
 	{
-		Matrix4 l_transpose = Transpose();
+		const Matrix4 l_transpose = Transpose();
 		return (l_transpose * *this) == identity;
+	}
+
+	bool Matrix4::Decompose(Vector3& a_outTranslation, Quaternion& a_outRotation, Vector3& a_outScale) const
+	{
+		a_outTranslation = { mat[0][3], mat[1][3], mat[2][3] };
+
+		Vector3 l_xAxis = { mat[0][0], mat[0][1], mat[0][2] };
+		Vector3 l_yAxis = { mat[1][0], mat[1][1], mat[1][2] };
+		Vector3 l_zAxis = { mat[2][0], mat[2][1], mat[2][2] };
+
+		a_outScale.x = l_xAxis.Length();
+		a_outScale.y = l_yAxis.Length();
+		a_outScale.z = l_zAxis.Length();
+
+		if (a_outScale.x != 0.f) l_xAxis /= a_outScale.x;
+		if (a_outScale.y != 0.f) l_yAxis /= a_outScale.y;
+		if (a_outScale.z != 0.f) l_zAxis /= a_outScale.z;
+
+		Matrix4 l_rotationMatrix;
+		l_rotationMatrix.mat[0][0] = l_xAxis.x; l_rotationMatrix.mat[0][1] = l_xAxis.y; l_rotationMatrix.mat[0][2] = l_xAxis.z;
+		l_rotationMatrix.mat[1][0] = l_yAxis.x; l_rotationMatrix.mat[1][1] = l_yAxis.y; l_rotationMatrix.mat[1][2] = l_yAxis.z;
+		l_rotationMatrix.mat[2][0] = l_zAxis.x; l_rotationMatrix.mat[2][1] = l_zAxis.y; l_rotationMatrix.mat[2][2] = l_zAxis.z;
+
+		a_outRotation = Quaternion::FromMatrix(l_rotationMatrix);
+
+		return true;
 	}
 
 	float Matrix4::Trace() const

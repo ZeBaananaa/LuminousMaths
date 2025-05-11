@@ -51,6 +51,8 @@ namespace Maths
 
 		bool IsOrthogonal() const;
 
+		bool Decompose(Vector3& a_outTranslation, Quaternion& a_outRotation, Vector3& a_outScale) const;
+
 		float Trace() const;
 
 		Matrix4 Inverse() const;

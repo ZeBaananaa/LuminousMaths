@@ -2,6 +2,7 @@
 
 namespace Maths
 {
+    class Matrix4;
     class Vector3;
 
     class Quaternion
@@ -26,6 +27,8 @@ namespace Maths
 
         [[nodiscard]] float Length() const;
         void Print() const;
+
+        static Quaternion FromMatrix(const Matrix4& a_mat);
 
         static Quaternion FromEulerAngles(const Vector3& a_v);
         static Quaternion Slerp(const Quaternion& a_q1, const Quaternion& a_q2, float a_t);
