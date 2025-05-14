@@ -9,6 +9,7 @@
 
 namespace Maths
 {
+
 	Quaternion::Quaternion(const float& a_x, const float& a_y, const float& a_z, const float& a_w)
 	{
 		w = a_w;

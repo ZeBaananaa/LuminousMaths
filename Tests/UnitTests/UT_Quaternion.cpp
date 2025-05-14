@@ -157,4 +157,14 @@ namespace Maths
 
         EXPECT_TRUE(QuaternionsEqual(q3, gq4));
     }
+
+    TEST(Quaternion, VecProd)
+    {
+        Vector3 height = Vector3(0, 2.0f, 0);
+        Quaternion rotation = Quaternion::FromEulerAngles(Maths::Vector3(90.f,0.f,0.f));
+
+        Vector3 produc = height * rotation;
+        produc.Print();
+    }
+
 }
