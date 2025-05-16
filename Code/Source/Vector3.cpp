@@ -126,18 +126,16 @@ namespace Maths
 	}
 
 
-	Vector3 Vector3::operator*(const Quaternion& a_q) const
+	Vector3 Vector3::operator*(const Quaternion& q) const
 	{
-		Vector3 l_currentVec { x, y, z };
+		Vector3 u(q.x, q.y, q.z);
+		float s = q.w;
 
-		const Vector3 l_qVec { a_q.x, a_q.y, a_q.z };
-		const float l_scalar { a_q.w };
-		const float l_dotProduct { DotProduct(l_qVec) };
-		const Vector3 l_crossProduct { CrossProduct(l_qVec) };
-		const float l_qVecDotProduct { l_qVec.DotProduct(l_qVec) };
-
-		Vector3 l_output { l_qVec * (2.0f * l_dotProduct) + l_currentVec * (l_scalar * l_scalar - l_qVecDotProduct) + (2.0f * l_scalar) };
-		return l_output * l_crossProduct;
+		Vector3 v(x, y, z);
+		Vector3 t =  u.CrossProduct(v) * 2.0f;
+		Maths::Vector3 l_result = v + t * s + u.CrossProduct(t);
+		Maths::Vector3 l_final = Maths::Vector3(Maths::Precise(l_result.x), Maths::Precise(l_result.y), Maths::Precise(l_result.z));
+		return l_final;
 	}
 
 

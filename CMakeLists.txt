@@ -63,7 +63,7 @@ endif ()
 #             CREATE OPTIONS              #
 # --------------------------------------- #
 
-option(${LM_LIB_NAME}_UNITTEST "Enable Unit Tests" OFF)
+option(${LM_LIB_NAME}_UNITTEST "Enable Unit Tests" ON)
 
 
 
