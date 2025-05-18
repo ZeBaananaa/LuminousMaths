@@ -24,6 +24,7 @@ namespace Maths
         [[nodiscard]] Quaternion Conjugate() const;
         [[nodiscard]] Quaternion Opposite() const;
         [[nodiscard]] Vector3 ToEulerAngles(bool a_toDeg) const;
+        Quaternion Inverse() const;
 
         [[nodiscard]] float Length() const;
         void Print() const;

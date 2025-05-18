@@ -96,6 +96,18 @@ namespace Maths
 		return l_return;
 	}
 
+
+	Quaternion Quaternion::Inverse() const
+	{
+		const float l_normSq = x * x + y * y + z * z + w * w;
+		if (l_normSq == 0.0f)
+			return Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+
+		const Quaternion l_conj = Conjugate();
+		return Quaternion(l_conj.x / l_normSq, l_conj.y / l_normSq, l_conj.z / l_normSq, l_conj.w / l_normSq);
+	}
+
+
 	void Quaternion::Print() const
 	{
 		std::cout << w << ", " << x << ", " << y << ", " << z << '\n';
