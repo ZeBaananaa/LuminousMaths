@@ -84,11 +84,15 @@ namespace Maths
 
 		static Matrix4 RotationXYZ(const Vector3& a_axisAngle);
 
+		static Matrix4 Rotation(const Quaternion& a_quat);
+
 		static Matrix4 Rotate(const Matrix4& a_mat, const float& a_angle, const Vector3& a_axis);
 
 		static Matrix4 TRS(const Vector3& a_translation, const Vector3& a_rotation, const Vector3& a_scale);
 
 		static Matrix4 TRS(const Matrix4& a_translation, const Matrix4& a_rotation, const Matrix4& a_scale);
+
+		static Matrix4 TRS(const Vector3& a_translation, const Quaternion& a_rotation, const Vector3& a_scale);
 
 		static Matrix4 LookAt(const Vector3& a_eye, const Vector3& a_center, const Vector3& a_up);
 

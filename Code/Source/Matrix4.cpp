@@ -84,6 +84,42 @@ namespace Maths
 		return l_finalRot;
 	}
 
+	Matrix4 Matrix4::Rotation(const Quaternion& a_quat)
+	{
+		const float xx = a_quat.x * a_quat.x;
+		const float yy = a_quat.y * a_quat.y;
+		const float zz = a_quat.z * a_quat.z;
+		const float xy = a_quat.x * a_quat.y;
+		const float xz = a_quat.x * a_quat.z;
+		const float yz = a_quat.y * a_quat.z;
+		const float wx = a_quat.w * a_quat.x;
+		const float wy = a_quat.w * a_quat.y;
+		const float wz = a_quat.w * a_quat.z;
+
+		Matrix4 l_result = identity;
+		l_result.mat[0][0] = 1.0f - 2.0f * (yy + zz);
+		l_result.mat[0][1] = 2.0f * (xy - wz);
+		l_result.mat[0][2] = 2.0f * (xz + wy);
+		l_result.mat[0][3] = 0.0f;
+
+		l_result.mat[1][0] = 2.0f * (xy + wz);
+		l_result.mat[1][1] = 1.0f - 2.0f * (xx + zz);
+		l_result.mat[1][2] = 2.0f * (yz - wx);
+		l_result.mat[1][3] = 0.0f;
+
+		l_result.mat[2][0] = 2.0f * (xz - wy);
+		l_result.mat[2][1] = 2.0f * (yz + wx);
+		l_result.mat[2][2] = 1.0f - 2.0f * (xx + yy);
+		l_result.mat[2][3] = 0.0f;
+
+		l_result.mat[3][0] = 0.0f;
+		l_result.mat[3][1] = 0.0f;
+		l_result.mat[3][2] = 0.0f;
+		l_result.mat[3][3] = 1.0f;
+
+		return l_result;
+	}
+
 	Matrix4 Matrix4::RotationAxisAngle(const float& a_angle, const Vector3& a_axis)
 	{
 		float l_radAngle = DegToRad(a_angle);
@@ -125,6 +161,15 @@ namespace Maths
 		Matrix4 l_mat = Translation(a_translation) *
 		                RotationXYZ(a_rotation) *
 		                Scale(a_scale);
+		l_mat.RoundTiny();
+		return l_mat;
+	}
+
+	Matrix4 Matrix4::TRS(const Maths::Vector3& a_translation, const Maths::Quaternion& a_rotation, const Maths::Vector3& a_scale)
+	{
+		Matrix4 l_mat = Translation(a_translation) *
+						Rotation(a_rotation) *
+						Scale(a_scale);
 		l_mat.RoundTiny();
 		return l_mat;
 	}
