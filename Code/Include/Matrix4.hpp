@@ -29,7 +29,7 @@ namespace Maths
 
 		inline void SetMatrixValue(int a_index1, int a_index2, float a_value) { mat[a_index1][a_index2] = a_value; }
 
-		inline Vector3 GetTranslation() const { return Vector3 {mat[3][0], mat[3][1], mat[3][2] }; }
+		inline Vector3 GetTranslation() const { return Vector3 {mat[0][3], mat[1][3], mat[2][3] }; }
 
 		inline Vector3 GetScale() const
 		{
