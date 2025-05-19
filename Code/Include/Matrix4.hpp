@@ -70,6 +70,8 @@ namespace Maths
 
 		Matrix4 Inverse() const;
 
+		Matrix4 InverseTRS() const;
+
 		static Matrix4 Translation(const Vector3& a_v);
 
 		static Matrix4 Scale(const Vector3& a_v);
