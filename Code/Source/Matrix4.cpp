@@ -400,9 +400,9 @@ namespace Maths
 	{
 		a_outTranslation = { mat[0][3], mat[1][3], mat[2][3] };
 
-		Vector3 l_xAxis = { mat[0][0], mat[0][1], mat[0][2] };
-		Vector3 l_yAxis = { mat[1][0], mat[1][1], mat[1][2] };
-		Vector3 l_zAxis = { mat[2][0], mat[2][1], mat[2][2] };
+		Vector3 l_xAxis = { mat[0][0], mat[1][0], mat[2][0] };
+		Vector3 l_yAxis = { mat[0][1], mat[1][1], mat[2][1] };
+		Vector3 l_zAxis = { mat[0][2], mat[1][2], mat[2][2] };
 
 		a_outScale.x = l_xAxis.Length();
 		a_outScale.y = l_yAxis.Length();
@@ -417,7 +417,8 @@ namespace Maths
 		l_rotationMatrix.mat[1][0] = l_yAxis.x; l_rotationMatrix.mat[1][1] = l_yAxis.y; l_rotationMatrix.mat[1][2] = l_yAxis.z;
 		l_rotationMatrix.mat[2][0] = l_zAxis.x; l_rotationMatrix.mat[2][1] = l_zAxis.y; l_rotationMatrix.mat[2][2] = l_zAxis.z;
 
-		a_outRotation = Quaternion::FromMatrix(l_rotationMatrix);
+		Matrix4 l_rotationMatrixTranspose = l_rotationMatrix.Transpose();
+		a_outRotation = Quaternion::FromMatrix(l_rotationMatrixTranspose);
 
 		return true;
 	}

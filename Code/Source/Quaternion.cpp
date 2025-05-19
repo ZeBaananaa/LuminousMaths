@@ -115,9 +115,9 @@ namespace Maths
 
     Quaternion Quaternion::FromMatrix(const Matrix4& a_mat)
     {
-        Vector3 xAxis = { a_mat.mat[0][0], a_mat.mat[0][1], a_mat.mat[0][2] };
-        Vector3 yAxis = { a_mat.mat[1][0], a_mat.mat[1][1], a_mat.mat[1][2] };
-        Vector3 zAxis = { a_mat.mat[2][0], a_mat.mat[2][1], a_mat.mat[2][2] };
+		Vector3 xAxis = { a_mat.mat[0][0], a_mat.mat[0][1], a_mat.mat[0][2] };
+		Vector3 yAxis = { a_mat.mat[1][0], a_mat.mat[1][1], a_mat.mat[1][2] };
+		Vector3 zAxis = { a_mat.mat[2][0], a_mat.mat[2][1], a_mat.mat[2][2] };
 
         float scaleX = xAxis.Length();
         float scaleY = yAxis.Length();
