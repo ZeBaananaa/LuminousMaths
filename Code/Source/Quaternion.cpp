@@ -113,47 +113,71 @@ namespace Maths
 		std::cout << w << ", " << x << ", " << y << ", " << z << '\n';
 	}
 
-	Quaternion Quaternion::FromMatrix(const Matrix4& a_mat)
-	{
-		float l_trace = a_mat.mat[0][0] + a_mat.mat[1][1] + a_mat.mat[2][2];
+    Quaternion Quaternion::FromMatrix(const Matrix4& a_mat)
+    {
+        Vector3 xAxis = { a_mat.mat[0][0], a_mat.mat[0][1], a_mat.mat[0][2] };
+        Vector3 yAxis = { a_mat.mat[1][0], a_mat.mat[1][1], a_mat.mat[1][2] };
+        Vector3 zAxis = { a_mat.mat[2][0], a_mat.mat[2][1], a_mat.mat[2][2] };
 
-		float l_scalar;
-		Quaternion l_quat;
+        float scaleX = xAxis.Length();
+        float scaleY = yAxis.Length();
+        float scaleZ = zAxis.Length();
 
-		if (l_trace > 0.0f)
-			{
-			l_scalar = 0.5f / std::sqrt(l_trace + 1.0f);
-			l_quat.w = 0.25f / l_scalar;
-			l_quat.x = (a_mat.mat[2][1] - a_mat.mat[1][2]) * l_scalar;
-			l_quat.y = (a_mat.mat[0][2] - a_mat.mat[2][0]) * l_scalar;
-			l_quat.z = (a_mat.mat[1][0] - a_mat.mat[0][1]) * l_scalar;
-		} else
-			{
-			if (a_mat.mat[0][0] > a_mat.mat[1][1] && a_mat.mat[0][0] > a_mat.mat[2][2]) {
-				l_scalar = 2.0f * std::sqrt(1.0f + a_mat.mat[0][0] - a_mat.mat[1][1] - a_mat.mat[2][2]);
-				l_quat.w = (a_mat.mat[2][1] - a_mat.mat[1][2]) / l_scalar;
-				l_quat.x = 0.25f * l_scalar;
-				l_quat.y = (a_mat.mat[0][1] + a_mat.mat[1][0]) / l_scalar;
-				l_quat.z = (a_mat.mat[0][2] + a_mat.mat[2][0]) / l_scalar;
-			} else if (a_mat.mat[1][1] > a_mat.mat[2][2])
-				{
-				l_scalar = 2.0f * std::sqrt(1.0f + a_mat.mat[1][1] - a_mat.mat[0][0] - a_mat.mat[2][2]);
-				l_quat.w = (a_mat.mat[0][2] - a_mat.mat[2][0]) / l_scalar;
-				l_quat.x = (a_mat.mat[0][1] + a_mat.mat[1][0]) / l_scalar;
-				l_quat.y = 0.25f * l_scalar;
-				l_quat.z = (a_mat.mat[1][2] + a_mat.mat[2][1]) / l_scalar;
-			} else
-				{
-				l_scalar = 2.0f * std::sqrt(1.0f + a_mat.mat[2][2] - a_mat.mat[0][0] - a_mat.mat[1][1]);
-				l_quat.w = (a_mat.mat[1][0] - a_mat.mat[0][1]) / l_scalar;
-				l_quat.x = (a_mat.mat[0][2] + a_mat.mat[2][0]) / l_scalar;
-				l_quat.y = (a_mat.mat[1][2] + a_mat.mat[2][1]) / l_scalar;
-				l_quat.z = 0.25f * l_scalar;
-			}
-		}
+        constexpr float epsilon = 1e-6f;
+        if (scaleX < epsilon)
+            scaleX = 1.0f;
+        if (scaleY < epsilon)
+            scaleY = 1.0f;
+        if (scaleZ < epsilon)
+            scaleZ = 1.0f;
 
-		return l_quat;
-	}
+        Matrix4 rotMat = a_mat;
+        for (int i = 0; i < 3; ++i)
+        {
+            rotMat.mat[0][i] /= scaleX;
+            rotMat.mat[1][i] /= scaleY;
+            rotMat.mat[2][i] /= scaleZ;
+        }
+
+        float trace = rotMat.mat[0][0] + rotMat.mat[1][1] + rotMat.mat[2][2];
+        float scalar;
+        Quaternion quat;
+
+        if (trace > 0.0f)
+        {
+            scalar = 0.5f / std::sqrt(trace + 1.0f);
+            quat.w = 0.25f / scalar;
+            quat.x = (rotMat.mat[2][1] - rotMat.mat[1][2]) * scalar;
+            quat.y = (rotMat.mat[0][2] - rotMat.mat[2][0]) * scalar;
+            quat.z = (rotMat.mat[1][0] - rotMat.mat[0][1]) * scalar;
+        } else
+        {
+            if (rotMat.mat[0][0] > rotMat.mat[1][1] && rotMat.mat[0][0] > rotMat.mat[2][2])
+            {
+                scalar = 2.0f * std::sqrt(1.0f + rotMat.mat[0][0] - rotMat.mat[1][1] - rotMat.mat[2][2]);
+                quat.w = (rotMat.mat[2][1] - rotMat.mat[1][2]) / scalar;
+                quat.x = 0.25f * scalar;
+                quat.y = (rotMat.mat[0][1] + rotMat.mat[1][0]) / scalar;
+                quat.z = (rotMat.mat[0][2] + rotMat.mat[2][0]) / scalar;
+            } else if (rotMat.mat[1][1] > rotMat.mat[2][2])
+            {
+                scalar = 2.0f * std::sqrt(1.0f + rotMat.mat[1][1] - rotMat.mat[0][0] - rotMat.mat[2][2]);
+                quat.w = (rotMat.mat[0][2] - rotMat.mat[2][0]) / scalar;
+                quat.x = (rotMat.mat[0][1] + rotMat.mat[1][0]) / scalar;
+                quat.y = 0.25f * scalar;
+                quat.z = (rotMat.mat[1][2] + rotMat.mat[2][1]) / scalar;
+            } else
+            {
+                scalar = 2.0f * std::sqrt(1.0f + rotMat.mat[2][2] - rotMat.mat[0][0] - rotMat.mat[1][1]);
+                quat.w = (rotMat.mat[1][0] - rotMat.mat[0][1]) / scalar;
+                quat.x = (rotMat.mat[0][2] + rotMat.mat[2][0]) / scalar;
+                quat.y = (rotMat.mat[1][2] + rotMat.mat[2][1]) / scalar;
+                quat.z = 0.25f * scalar;
+            }
+        }
+
+        return quat.Normalize();
+    }
 
 	Quaternion Quaternion::FromEulerAngles(const Vector3& a_v)
 	{
